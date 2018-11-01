@@ -1,0 +1,19 @@
+﻿<Window x:Class="ImportMultipleFormatFiles.temp1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:ImportMultipleFormatFiles" xmlns:models="clr-namespace:ImportMultipleFormatFiles.Models" mc:Ignorable="d" Title="temp1" Height="450" Width="800" FlowDirection="RightToLeft">
+  <Window.Resources>
+    <models:Employee x:Key="me" Age="41" FirstName="Yinnon" LastName="Dotan" />
+  </Window.Resources>
+  <Canvas>
+    <TextBox x:Name="tb" Height="47" Canvas.Left="533" TextWrapping="Wrap" Canvas.Top="164" Width="180"
+             >
+      <TextBox.Text>
+        <Binding Source="{StaticResource me}" Path="FirstName" UpdateSourceTrigger="PropertyChanged" />
+      </TextBox.Text>
+   
+
+
+
+
+    </TextBox>
+
+  </Canvas>
+</Window>
