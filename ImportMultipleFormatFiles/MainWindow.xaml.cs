@@ -37,6 +37,8 @@ namespace ImportMultipleFormatFiles
 
       }
 
+   
+
       //public System.Windows.DependencyProperty ColumnProperty
 
       //{
@@ -65,6 +67,20 @@ namespace ImportMultipleFormatFiles
       public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
       {
          throw new NotImplementedException();
+      }
+   }
+
+   public class ComboTextWidthConverter : IValueConverter
+   {
+      public object Convert(object values, Type targetType, object parameter, CultureInfo culture)
+      {
+         double width = Double.Parse(values.ToString());
+         return width-SystemParameters.VerticalScrollBarWidth;
+      }
+
+      public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)
+      {
+         return null;
       }
    }
 }
