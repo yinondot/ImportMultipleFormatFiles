@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ChooseFolderCommand.cs" />
     <Compile Include="Converters\ComboNameConverter.cs" />
     <Compile Include="Converters\ComboTextWidthConverter.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -72,6 +73,9 @@
     </Compile>
     <Compile Include="temp2.xaml.cs">
       <DependentUpon>temp2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="tempCommand.xaml.cs">
+      <DependentUpon>tempCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -91,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="temp2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="tempCommand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

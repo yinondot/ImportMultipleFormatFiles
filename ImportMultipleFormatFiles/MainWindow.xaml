@@ -1,7 +1,9 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:ImportMultipleFormatFiles" xmlns:vm="clr-namespace:ImportMultipleFormatFiles.ViewModel" xmlns:Converters="clr-namespace:ImportMultipleFormatFiles.Converters" x:Class="ImportMultipleFormatFiles.MainWindow" mc:Ignorable="d" Title="MainWindow" Height="450" Width="1383.387">
+  
+  
   <Window.Resources>
     <Converters:ComboNameConverter x:Key="ComboNameConverter" />
- 
+
     <Converters:ComboTextWidthConverter x:Key="ComboTextWidthConverter" />
     <vm:MainViewModel x:Key="mainViewModel" />
 
@@ -42,8 +44,14 @@
                  Fill="#FFDBD9F0">
       </Rectangle>-->
 
-      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Text, ElementName=cbFileFormats, Mode=OneWay, Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged}" />
+      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Text, ElementName=cbFileFormats,  Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
+    <Button x:Name="btnChooseFolder2" Content="Button" Canvas.Left="1102" Canvas.Top="55" Width="75">
+      <Button.InputBindings>
+        <MouseBinding Gesture="MiddleClick" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
+      </Button.InputBindings>
+    </Button>
+    <Button x:Name="btnChooseFolder" Content="Button" Canvas.Left="1217" Canvas.Top="55" Width="75" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
 
   </Canvas>
 
