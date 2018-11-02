@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImportMultipleFormatFiles.Models;
+using ImportMultipleFormatFiles.Converters;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
    public class MainViewModel
     {
-      Employee em;
+      ComboNameConverter comboNameConverter;
+      ComboTextWidthConverter comboTextWidthConverter;
       public MainViewModel()
       {
-         em = new Employee();
+         comboNameConverter = new ComboNameConverter();
+         comboTextWidthConverter = new ComboTextWidthConverter();
       }
     }
 }
