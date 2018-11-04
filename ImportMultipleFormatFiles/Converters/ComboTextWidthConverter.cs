@@ -14,7 +14,7 @@ namespace ImportMultipleFormatFiles.Converters
       public object Convert(object values, Type targetType, object parameter, CultureInfo culture)
       {
          double width = Double.Parse(values.ToString());
-         return width - SystemParameters.VerticalScrollBarWidth;
+         return width - int.Parse(parameter.ToString());
       }
 
       public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)

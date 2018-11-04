@@ -24,7 +24,7 @@
 
       </ComboBox>
 
-      <Label x:Name="tbkHeader" IsHitTestVisible="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Background="#CD06223A" FontFamily="Segoe UI Emoji" Foreground="#FFFDF5F5" FontWeight="Bold" Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ElementName=cbFileFormats, Mode=OneWay}" />
+      <Label x:Name="tbkHeader" IsHitTestVisible="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Background="#CD06223A" FontFamily="Segoe UI Emoji" Foreground="#FFFDF5F5" FontWeight="Bold" Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ConverterParameter={x:Static SystemParameters.VerticalScrollBarWidth}, ElementName=cbFileFormats, Mode=OneWay}" />
 
     </Grid>
     <Button Content="Button" Width="198" Canvas.Left="986" Canvas.Top="372" RenderTransformOrigin="-1.849,2.95" Click="Button_Click" />
@@ -44,7 +44,7 @@
                  Fill="#FFDBD9F0">
       </Rectangle>-->
 
-      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Text, ElementName=cbFileFormats,  Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged}" />
+      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding SelectedValue, ElementName=cbFileFormats,  Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
     <Button x:Name="btnChooseFolder2" Content="Button" Canvas.Left="1102" Canvas.Top="55" Width="75">
       <Button.InputBindings>

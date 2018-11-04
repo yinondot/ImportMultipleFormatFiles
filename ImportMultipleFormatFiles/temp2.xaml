@@ -8,5 +8,8 @@
       <ComboBoxItem Content="Lester" />
 
     </ComboBox>
+    
+    
+    <ComboBox HorizontalAlignment="Left" Margin="494,63,0,0" VerticalAlignment="Top" Width="138" Height="34" IsEditable="true" IsReadOnly="true" IsDropDownOpen="True" Text="gdgdf" />
   </Grid>
 </Window>
