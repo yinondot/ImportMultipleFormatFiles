@@ -9,6 +9,7 @@ using ImportMultipleFormatFiles.Commands;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
@@ -37,6 +38,8 @@ namespace ImportMultipleFormatFiles.ViewModel
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
+
+         
       }
       public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,13 +52,25 @@ namespace ImportMultipleFormatFiles.ViewModel
             if (format != value)
             {
                format = value;
-
                OnPropertyChanged("Format");
-
+              Filter= SetFilter(format);
             }
-
          }
       }
+
+      private string SetFilter(string format)
+      {
+         return "";
+      }
+
+      private string filter;
+
+      public string Filter
+      {
+         get { return filter; }
+         set { filter = value; }
+      }
+
 
       private List<string> chosenFiles;
 
@@ -89,7 +104,13 @@ namespace ImportMultipleFormatFiles.ViewModel
       {
          CommonOpenFileDialog dlg = new CommonOpenFileDialog();
          dlg.IsFolderPicker = true;
-         dlg.ShowDialog();
+         dlg.InitialDirectory = MainHelper.DirectoryToOpen;
+         if (dlg.ShowDialog()==CommonFileDialogResult.Ok)
+         {
+            MainHelper.DirectoryToOpen = dlg.FileName;
+           
+         }
+         
       }
    }
 

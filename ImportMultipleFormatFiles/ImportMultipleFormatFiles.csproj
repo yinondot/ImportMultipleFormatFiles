@@ -59,6 +59,9 @@
     </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
+    <Reference Include="UtiltyCasewareIdea">
+      <HintPath>dlls\UtiltyCasewareIdea.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -82,6 +85,7 @@
     <Compile Include="tempCommand.xaml.cs">
       <DependentUpon>tempCommand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MainHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
