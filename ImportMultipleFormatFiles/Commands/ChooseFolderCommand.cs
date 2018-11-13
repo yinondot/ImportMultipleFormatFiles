@@ -30,4 +30,26 @@ namespace ImportMultipleFormatFiles.Commands
 
       }
    }
+   public class ChooseFileCommand : ICommand
+   {
+      public MainViewModel Vm { get; set; }
+
+      public ChooseFileCommand(MainViewModel vm)
+      {
+         Vm = vm;
+      }
+      public event EventHandler CanExecuteChanged;
+
+      public bool CanExecute(object parameter)
+      {
+         return true;
+      }
+
+      public void Execute(object parameter)
+      {
+         Vm.ChooseFileMethod();
+
+      }
+   }
+
 }

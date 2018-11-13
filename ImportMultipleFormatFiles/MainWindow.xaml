@@ -1,36 +1,45 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:ImportMultipleFormatFiles" xmlns:vm="clr-namespace:ImportMultipleFormatFiles.ViewModel" xmlns:Converters="clr-namespace:ImportMultipleFormatFiles.Converters" x:Class="ImportMultipleFormatFiles.MainWindow" mc:Ignorable="d" Title="MainWindow" Height="450" Width="1383.387">
-  
-  
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:ImportMultipleFormatFiles" xmlns:vm="clr-namespace:ImportMultipleFormatFiles.ViewModel" xmlns:Converters="clr-namespace:ImportMultipleFormatFiles.Converters" xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="ImportMultipleFormatFiles.MainWindow" mc:Ignorable="d" Title="MainWindow" Height="450" Width="800" FlowDirection="RightToLeft" >
+
+
   <Window.Resources>
     <Converters:ComboNameConverter x:Key="ComboNameConverter" />
-
     <Converters:ComboTextWidthConverter x:Key="ComboTextWidthConverter" />
     <vm:MainViewModel x:Key="mainViewModel" />
-
   </Window.Resources>
-  <Canvas>
-    <Grid Canvas.Left="1102" Canvas.Top="101" Background="Transparent">
-      <!--<Rectangle Fill="#8080" HorizontalAlignment="Left" Height="184" Stroke="Black" VerticalAlignment="Top" Width="190" />-->
+  
+  <Window.DataContext >
+    <vm:MainViewModel />
+  </Window.DataContext>
+  
+  <Grid >
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="2*" MinWidth="240" />
+      <ColumnDefinition Width="10*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5*" />
+      <RowDefinition Height="20*" />
+    </Grid.RowDefinitions>
 
-      <ComboBox Height="31" IsReadOnly="True" x:Name="cbFileFormats" Style="{DynamicResource ComboBoxStyle1}" VerticalContentAlignment="Center" VerticalAlignment="Top" Text="... פורמט לייבוא" HorizontalContentAlignment="Center" Background="Transparent" Width="190" Opacity="1">
-        <ComboBoxItem Content="Excel" />
-        <ComboBoxItem Content="Access" />
-        <ComboBoxItem Content="XML" />
-        <ComboBoxItem Content="Print Report &amp; Adobe Pdf" />
-        <ComboBoxItem Content="Text" />
-        <ComboBoxItem Content="dBase" />
-        <ComboBoxItem Content="AS400" />
+    <Label Grid.Column="1" Content="IMPORT MULTIPLE FORMAT FILES" Style="{StaticResource lblHeaderStyle}"/>
+    <ComboBox x:Name="cbFileFormats" Grid.Row="1" Style="{StaticResource comboStyle}" Text="... פורמט לייבוא" ItemsSource="{Binding Path=ImportFormats}" SelectedValue="{Binding Format, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+      <!--, Source={StaticResource mainViewModel}}">-->
+      <!--<ComboBoxItem Content="Excel" />
+      <ComboBoxItem Content="Access" />
+      <ComboBoxItem Content="XML" />
+      <ComboBoxItem Content="Print Report &amp; Adobe Pdf" />
+      <ComboBoxItem Content="Text" />
+      <ComboBoxItem Content="dBase" />
+      <ComboBoxItem Content="AS400" />-->
+    </ComboBox>
+
+    <Label x:Name="lblHeader" Grid.Row="1" IsHitTestVisible="False" Margin="{Binding ElementName=cbFileFormats, Path=Margin}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Background="#CD06223A" FontFamily="Segoe UI Emoji" Foreground="#FFFDF5F5" FontWeight="Bold" Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ConverterParameter={x:Static SystemParameters.VerticalScrollBarWidth}, ElementName=cbFileFormats, Mode=OneWay}" />
+
+    <Image Source="Resources/iacslogo.png" Margin="5"/>
+    <!--<Button Grid.Column="1" Grid.Row="1" Content="Button" Width="198" Height="20" Click="Button_Click" />-->
 
 
-      </ComboBox>
-
-      <Label x:Name="tbkHeader" IsHitTestVisible="False" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Background="#CD06223A" FontFamily="Segoe UI Emoji" Foreground="#FFFDF5F5" FontWeight="Bold" Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ConverterParameter={x:Static SystemParameters.VerticalScrollBarWidth}, ElementName=cbFileFormats, Mode=OneWay}" />
-
-    </Grid>
-    <Button Content="Button" Width="198" Canvas.Left="986" Canvas.Top="372" RenderTransformOrigin="-1.849,2.95" Click="Button_Click" />
-
-
-    <Grid Height="282" Width="931" FlowDirection="RightToLeft" Canvas.Left="96" Canvas.Top="55" Background="#3030">
+    <Grid Grid.Column="1" Grid.Row="1" Background="#3030">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="1*" />
         <ColumnDefinition Width="2*" />
@@ -43,17 +52,25 @@
            Grid.RowSpan="10"   
                  Fill="#FFDBD9F0">
       </Rectangle>-->
+     
+      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Format, Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged , Mode=OneWay}" />
 
-      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding SelectedValue, ElementName=cbFileFormats,  Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged}" />
+      <!--<Button x:Name="btnChooseFolder2" Grid.Column="1" Grid.Row="1" Content="Button" Width="75">
+        <Button.InputBindings>
+          <MouseBinding Gesture="MiddleClick" Command="{Binding ChooseFolderCommand}" />
+        </Button.InputBindings>
+      </Button>-->
+      <StackPanel x:Name="stkImport" Grid.Row="1">
+      <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
+        <Button x:Name="btnChooseFile" Content="Choose File" Command="{Binding ChooseFileCommand}"/>
+    
+        
+        
+      </StackPanel>
     </Grid>
-    <Button x:Name="btnChooseFolder2" Content="Button" Canvas.Left="1102" Canvas.Top="55" Width="75">
-      <Button.InputBindings>
-        <MouseBinding Gesture="MiddleClick" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
-      </Button.InputBindings>
-    </Button>
-    <Button x:Name="btnChooseFolder" Content="Button" Canvas.Left="1217" Canvas.Top="55" Width="75" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
+   
 
-  </Canvas>
+  </Grid>
 
 
 </Window>
