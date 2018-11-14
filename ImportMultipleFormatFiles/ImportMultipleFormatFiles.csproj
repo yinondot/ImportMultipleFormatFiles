@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\ChooseFolderCommand.cs" />
+    <Compile Include="CommonValues\Values.cs" />
     <Compile Include="Converters\ComboNameConverter.cs" />
     <Compile Include="Converters\ComboTextWidthConverter.cs" />
     <Compile Include="Models\Employee.cs" />

@@ -10,15 +10,15 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using ImportMultipleFormatFiles.CommonValues;
+using System.IO;
+using System.Windows.Input;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
    public class MainViewModel : INotifyPropertyChanged
    {
-      private List<string> formats = new List<string>()
-      {
-         "Excel","Access","XML","Print Report & Adobe Pdf","dBase","AS400"
-      };
+      private List<string> formats = Values.Formats;
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
 
@@ -39,7 +39,10 @@ namespace ImportMultipleFormatFiles.ViewModel
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
 
-         
+         Format = "";
+         ChosenFiles = new List<string>();
+ 
+
       }
       public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,27 +52,18 @@ namespace ImportMultipleFormatFiles.ViewModel
          get { return format; }
          set
          {
-            if (format != value)
+            if (format != value && value != null)
             {
                format = value;
-               OnPropertyChanged("Format");
-              Filter= SetFilter(format);
+               OnPropertyChanged("Format");           
+               MainHelper.SetFilters(format);
+            
             }
          }
       }
 
-      private string SetFilter(string format)
-      {
-         return "";
-      }
+  
 
-      private string filter;
-
-      public string Filter
-      {
-         get { return filter; }
-         set { filter = value; }
-      }
 
 
       private List<string> chosenFiles;
@@ -77,12 +71,13 @@ namespace ImportMultipleFormatFiles.ViewModel
       public List<string> ChosenFiles
       {
          get { return chosenFiles; }
-         set {
+         set
+         {
             if (chosenFiles != value)
             {
                chosenFiles = value;
                OnPropertyChanged("ChosenFiles");
-            } 
+            }
          }
       }
 
@@ -96,7 +91,7 @@ namespace ImportMultipleFormatFiles.ViewModel
       {
          CommonOpenFileDialog dlg = new CommonOpenFileDialog();
          dlg.IsFolderPicker = false;
-       
+
          dlg.ShowDialog();
       }
 
@@ -105,12 +100,21 @@ namespace ImportMultipleFormatFiles.ViewModel
          CommonOpenFileDialog dlg = new CommonOpenFileDialog();
          dlg.IsFolderPicker = true;
          dlg.InitialDirectory = MainHelper.DirectoryToOpen;
-         if (dlg.ShowDialog()==CommonFileDialogResult.Ok)
+         if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
          {
-            MainHelper.DirectoryToOpen = dlg.FileName;
-           
+            MainHelper.DirectoryToOpen = dlg.FileName; //updating the last chosen directory next time it will open in this dir
+
+         GetFiles(MainHelper.DirectoryToOpen, MainHelper.Filters);
          }
-         
+
+      }
+
+      private void GetFiles(string directory, List<string> filters)
+      {
+         foreach (var item in filters)
+         {
+          ChosenFiles.AddRange(  Directory.GetFiles(directory, "*" + item));
+         }
       }
    }
 

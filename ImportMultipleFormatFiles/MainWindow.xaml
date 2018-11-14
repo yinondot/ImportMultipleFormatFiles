@@ -61,11 +61,11 @@
         </Button.InputBindings>
       </Button>-->
       <StackPanel x:Name="stkImport" Grid.Row="1">
-      <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand, Source={StaticResource mainViewModel}}" />
+      <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
         <Button x:Name="btnChooseFile" Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-    
-        
-        
+        <ListBox Height="300" ItemsSource="{Binding ChosenFiles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+
+
       </StackPanel>
     </Grid>
    
