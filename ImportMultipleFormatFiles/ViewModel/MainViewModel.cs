@@ -13,10 +13,11 @@ using System.Diagnostics;
 using ImportMultipleFormatFiles.CommonValues;
 using System.IO;
 using System.Windows.Input;
+using System.Collections.Specialized;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
-   public class MainViewModel : INotifyPropertyChanged
+   public class MainViewModel : INotifyPropertyChanged 
    {
       private List<string> formats = Values.Formats;
 
@@ -40,11 +41,12 @@ namespace ImportMultipleFormatFiles.ViewModel
          ChooseFileCommand = new ChooseFileCommand(this);
 
          Format = "";
-         ChosenFiles = new List<string>();
+         ChosenFiles = new ObservableCollection<string>();
  
 
       }
       public event PropertyChangedEventHandler PropertyChanged;
+     
 
       private string format = "";
       public string Format  // specifies the file format chosen
@@ -68,19 +70,20 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       private List<string> chosenFiles;
 
-      public List<string> ChosenFiles
-      {
-         get { return chosenFiles; }
-         set
-         {
-            if (chosenFiles != value)
-            {
-               chosenFiles = value;
-               OnPropertyChanged("ChosenFiles");
-            }
-         }
-      }
+      //public List<string> ChosenFiles
+      //{
+      //   get { return chosenFiles; }
+      //   set
+      //   {
+      //      if (chosenFiles != value)
+      //      {
+      //         chosenFiles = value;
+      //         OnPropertyChanged("ChosenFiles");
+      //      }
+      //   }
+      //}
 
+      public ObservableCollection<string> ChosenFiles { get; set; }
 
       private void OnPropertyChanged(string propName)
       {
@@ -113,7 +116,14 @@ namespace ImportMultipleFormatFiles.ViewModel
       {
          foreach (var item in filters)
          {
-          ChosenFiles.AddRange(  Directory.GetFiles(directory, "*" + item));
+            string[] temp = Directory.GetFiles(directory, "*" + item);
+            foreach (string fileName in temp)
+            {
+               ChosenFiles.Add(fileName);
+            }
+             //  ChosenFiles.AddRange(Directory.GetFiles(directory, "*" + item));
+            
+         
          }
       }
    }

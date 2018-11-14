@@ -53,7 +53,7 @@
                  Fill="#FFDBD9F0">
       </Rectangle>-->
      
-      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Format, Converter={StaticResource ComboNameConverter},UpdateSourceTrigger=PropertyChanged , Mode=OneWay}" />
+      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ElementName=cbFileFormats, Path=SelectedValue, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
       <!--<Button x:Name="btnChooseFolder2" Grid.Column="1" Grid.Row="1" Content="Button" Width="75">
         <Button.InputBindings>
@@ -63,7 +63,7 @@
       <StackPanel x:Name="stkImport" Grid.Row="1">
       <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
         <Button x:Name="btnChooseFile" Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-        <ListBox Height="300" ItemsSource="{Binding ChosenFiles, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        <ListView ItemsSource="{Binding ChosenFiles}"/>
 
 
       </StackPanel>
