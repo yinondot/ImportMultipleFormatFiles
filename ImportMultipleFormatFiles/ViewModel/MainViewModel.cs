@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using ImportMultipleFormatFiles.CommonValues;
+using ImportMultipleFormatFiles.Models;
 using System.IO;
 using System.Windows.Input;
 using System.Collections.Specialized;
@@ -21,19 +22,22 @@ namespace ImportMultipleFormatFiles.ViewModel
    public class MainViewModel : INotifyPropertyChanged
    {
       private List<string> formats = Values.Formats;
-     
+
 
       #region Commands
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
       public ChooseFileCommand ChooseFileCommand { get; set; }
+      public CheckBoxClickedCommand CheckBoxClickedCommand { get; set; }
       #endregion
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
-      public ObservableCollection<string> ChosenFiles { get; set; }
+      // public ObservableCollection<string> ChosenFiles { get; set; }
+
+      public ObservableCollection<ChosenFile> ChosenFiles { get; set; }
 
       public MainViewModel()
       {
-         Initialize();       
+         Initialize();
       }
 
       private void Initialize()
@@ -42,9 +46,11 @@ namespace ImportMultipleFormatFiles.ViewModel
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
+         CheckBoxClickedCommand = new CheckBoxClickedCommand(this);
 
          Format = "";
-         ChosenFiles = new ObservableCollection<string>();
+         //  ChosenFiles = new ObservableCollection<string>();
+         ChosenFiles = new ObservableCollection<ChosenFile>();
 
          MainHelper.LoadThisStaticClass = false;
       }
@@ -62,8 +68,8 @@ namespace ImportMultipleFormatFiles.ViewModel
             {
                format = value;
                OnPropertyChanged("Format");
-                 MainHelper.SetFileTypes(Format);
-            
+               MainHelper.SetFileTypes(Format);
+
                ChosenFiles.Clear();
 
             }
@@ -76,28 +82,34 @@ namespace ImportMultipleFormatFiles.ViewModel
          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
       }
 
+      #region commands methods
       public void ChooseFileMethod()
       {
-        OpenFileDialog dlg = new OpenFileDialog();
-        
+         OpenFileDialog dlg = new OpenFileDialog();
+
          dlg.InitialDirectory = MainHelper.SavedDirectory;
-         dlg.Filter = MainHelper.GetFilterString(MainHelper.FileTypes,Format);
-         if (dlg.ShowDialog()==DialogResult.OK)
+         dlg.Filter = MainHelper.GetFilterString(MainHelper.FileTypes, Format);
+         if (dlg.ShowDialog() == DialogResult.OK)
          {
             MainHelper.SavedDirectory = Path.GetDirectoryName(dlg.FileName);
 
-            if (!ChosenFiles.Contains(dlg.FileName))
+            //if (!ChosenFiles.Contains(dlg.FileName))
+            //{
+            //   ChosenFiles.Add(dlg.FileName);
+            //}
+
+            if (!ChosenFiles.Any(file=>file.FullPath==dlg.FileName))
             {
-               ChosenFiles.Add(dlg.FileName);
+               ChosenFiles.Add(new ChosenFile(dlg.FileName, false));
             }
-           
+
          }
-         
+
       }
 
       public void ChooseFolderMethod()
       {
-        
+
          CommonOpenFileDialog dlg = new CommonOpenFileDialog();
          dlg.IsFolderPicker = true;
          dlg.InitialDirectory = MainHelper.SavedDirectory;
@@ -107,17 +119,26 @@ namespace ImportMultipleFormatFiles.ViewModel
 
             foreach (var file in MainHelper.GetMatchingFiles(MainHelper.SavedDirectory, MainHelper.FileTypes))
             {
-               if (!ChosenFiles.Contains(file))
+               if (!ChosenFiles.Any(_file => _file.FullPath == dlg.FileName))
                {
-                  ChosenFiles.Add(file);
+                  ChosenFiles.Add(new ChosenFile(file, false));
                }
-               
-            }  
+
+            }
          }
 
       }
 
-   
+      public void CheckBoxClickedMethod(object parameter)
+      {
+         var cf = parameter as ChosenFile;
+         if (cf!=null)
+         {
+            cf.IsChecked = !cf.IsChecked;
+         }
+      }
+      #endregion
+
    }
 
 

@@ -22,6 +22,11 @@
       <!--<Setter Property="" Value="" />-->
     </Style>
 
+
+    <!--<Style x:Key="stylCLB" TargetType="{xctk:Type CheckListBox }">-->
+      
+    
+
       <Style x:Key="lblHeaderStyle" TargetType="{x:Type Label}">
       <!--<Setter Property="FlowDirection" Value="LeftToRight" />-->
       <Setter Property="Margin" Value="10,0,10,10" />
