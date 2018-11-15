@@ -14,39 +14,43 @@ using ImportMultipleFormatFiles.CommonValues;
 using System.IO;
 using System.Windows.Input;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
-   public class MainViewModel : INotifyPropertyChanged 
+   public class MainViewModel : INotifyPropertyChanged
    {
       private List<string> formats = Values.Formats;
+     
 
-      public ReadOnlyCollection<string> ImportFormats { get; set; }
-
-      public ComboNameConverter comboNameConverter;
-      public ComboTextWidthConverter comboTextWidthConverter;
-
+      #region Commands
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
       public ChooseFileCommand ChooseFileCommand { get; set; }
+      #endregion
 
+      public ReadOnlyCollection<string> ImportFormats { get; set; }
+      public ObservableCollection<string> ChosenFiles { get; set; }
 
       public MainViewModel()
       {
-         ImportFormats = new ReadOnlyCollection<string>(formats);
+         Initialize();       
+      }
 
-         comboNameConverter = new ComboNameConverter();
-         comboTextWidthConverter = new ComboTextWidthConverter();
+      private void Initialize()
+      {
+         ImportFormats = new ReadOnlyCollection<string>(formats);
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
 
          Format = "";
          ChosenFiles = new ObservableCollection<string>();
- 
 
+         MainHelper.LoadThisStaticClass = false;
       }
+
       public event PropertyChangedEventHandler PropertyChanged;
-     
+      public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
 
       private string format = "";
       public string Format  // specifies the file format chosen
@@ -57,33 +61,15 @@ namespace ImportMultipleFormatFiles.ViewModel
             if (format != value && value != null)
             {
                format = value;
-               OnPropertyChanged("Format");           
-               MainHelper.SetFilters(format);
+               OnPropertyChanged("Format");
+                 MainHelper.SetFileTypes(Format);
             
+               ChosenFiles.Clear();
+
             }
          }
       }
 
-  
-
-
-
-      private List<string> chosenFiles;
-
-      //public List<string> ChosenFiles
-      //{
-      //   get { return chosenFiles; }
-      //   set
-      //   {
-      //      if (chosenFiles != value)
-      //      {
-      //         chosenFiles = value;
-      //         OnPropertyChanged("ChosenFiles");
-      //      }
-      //   }
-      //}
-
-      public ObservableCollection<string> ChosenFiles { get; set; }
 
       private void OnPropertyChanged(string propName)
       {
@@ -92,40 +78,46 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       public void ChooseFileMethod()
       {
-         CommonOpenFileDialog dlg = new CommonOpenFileDialog();
-         dlg.IsFolderPicker = false;
+        OpenFileDialog dlg = new OpenFileDialog();
+        
+         dlg.InitialDirectory = MainHelper.SavedDirectory;
+         dlg.Filter = MainHelper.GetFilterString(MainHelper.FileTypes,Format);
+         if (dlg.ShowDialog()==DialogResult.OK)
+         {
+            MainHelper.SavedDirectory = Path.GetDirectoryName(dlg.FileName);
 
-         dlg.ShowDialog();
+            if (!ChosenFiles.Contains(dlg.FileName))
+            {
+               ChosenFiles.Add(dlg.FileName);
+            }
+           
+         }
+         
       }
 
       public void ChooseFolderMethod()
       {
+        
          CommonOpenFileDialog dlg = new CommonOpenFileDialog();
          dlg.IsFolderPicker = true;
-         dlg.InitialDirectory = MainHelper.DirectoryToOpen;
+         dlg.InitialDirectory = MainHelper.SavedDirectory;
          if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
          {
-            MainHelper.DirectoryToOpen = dlg.FileName; //updating the last chosen directory next time it will open in this dir
+            MainHelper.SavedDirectory = dlg.FileName; //updating the last chosen directory next time it will open in this dir
 
-         GetFiles(MainHelper.DirectoryToOpen, MainHelper.Filters);
-         }
-
-      }
-
-      private void GetFiles(string directory, List<string> filters)
-      {
-         foreach (var item in filters)
-         {
-            string[] temp = Directory.GetFiles(directory, "*" + item);
-            foreach (string fileName in temp)
+            foreach (var file in MainHelper.GetMatchingFiles(MainHelper.SavedDirectory, MainHelper.FileTypes))
             {
-               ChosenFiles.Add(fileName);
-            }
-             //  ChosenFiles.AddRange(Directory.GetFiles(directory, "*" + item));
-            
-         
+               if (!ChosenFiles.Contains(file))
+               {
+                  ChosenFiles.Add(file);
+               }
+               
+            }  
          }
+
       }
+
+   
    }
 
 

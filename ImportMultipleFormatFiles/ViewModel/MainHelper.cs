@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,61 +10,62 @@ namespace ImportMultipleFormatFiles.ViewModel
 {
    public static class MainHelper
    {
+      public static bool LoadThisStaticClass { get; set; }
       static MainHelper()
       {
-         DirectoryToOpen = UtilityCasewareIdea.GetProjectDirectory() + @"Source Files.ILB";
-         Filters = new List<string>();
+         SavedDirectory = UtilityCasewareIdea.GetProjectDirectory() + @"Source Files.ILB";
+         FileTypes = new List<string>();
       }
-      public static string DirectoryToOpen { get; set; }
-      public static List<string> Filters { get; set; }
+      public static string SavedDirectory { get; set; }
+      public static List<string> FileTypes { get; set; }
     
-      public static void SetFilters(string format)
+      public static void SetFileTypes(string format)
       {
-         Filters.Clear();
+         FileTypes.Clear();
          switch (format)
          {
             case "Excel":
                {
-                  Filters.Add(".xls");
-                  Filters.Add(".xlsx");
+                  FileTypes.Add(".xls");
+                  FileTypes.Add(".xlsx");
                   break;
                }
             case "Access":
                {
-                  Filters.Add(".mdb");
-                  Filters.Add(".accdb");
+                  FileTypes.Add(".mdb");
+                  FileTypes.Add(".accdb");
                   break;
                }
             case "XML":
                {
-                  Filters.Add(".xml");
+                  FileTypes.Add(".xml");
                   break;
                }
             case "Print Report & Adobe Pdf":
                {
-                  Filters.Add(".pdf");
-                  Filters.Add(".prn");
-                  Filters.Add(".lis");
-                  Filters.Add(".txt");
+                  FileTypes.Add(".pdf");
+                  FileTypes.Add(".prn");
+                  FileTypes.Add(".lis");
+                  FileTypes.Add(".txt");
 
                   break;
                }
             case "Text":
                {
-                  Filters.Add(".txt");
-                  Filters.Add(".asc");
-                  Filters.Add(".csv");
+                  FileTypes.Add(".txt");
+                  FileTypes.Add(".asc");
+                  FileTypes.Add(".csv");
 
                   break;
                }
             case "dBase":
                {
-                  Filters.Add(".dbf");
+                  FileTypes.Add(".dbf");
                   break;
                }
             case "AS400":
                {
-                  Filters.Add(".dat");
+                  FileTypes.Add(".dat");
                   break;
                }
 
@@ -74,5 +76,34 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
+   
+
+      public static List<string> GetMatchingFiles(string directory, List<string> filters)
+      {
+         List<string> fileList = new List<string>();
+         foreach (var item in filters)
+         {
+            string[] temp = (Directory.GetFiles(directory, "*" + item));
+            
+       
+            foreach (string fileName in temp.Where(file => file.ToLower().EndsWith(item)))
+            {
+               fileList.Add(fileName);
+            }
+         }
+         return fileList;
+      }
+
+      internal static string GetFilterString(List<string> fileTypes,string format)
+      {
+         string temp = "";
+         foreach (string item in fileTypes) // assumes filetypes are of the pattern ".xls"
+         {
+            temp = temp + "*" + item+";";
+         }
+         temp = temp.Remove(temp.Length - 1, 1);
+         temp = format + "|" + temp ;
+         return temp;
+      }
    }
 }

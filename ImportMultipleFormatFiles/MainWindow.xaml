@@ -5,6 +5,7 @@
     <Converters:ComboNameConverter x:Key="ComboNameConverter" />
     <Converters:ComboTextWidthConverter x:Key="ComboTextWidthConverter" />
     <vm:MainViewModel x:Key="mainViewModel" />
+    <Converters:GetFileNameConverter x:Key="GetFileNameConverter"/>
   </Window.Resources>
   
   <Window.DataContext >
@@ -23,17 +24,10 @@
 
     <Label Grid.Column="1" Content="IMPORT MULTIPLE FORMAT FILES" Style="{StaticResource lblHeaderStyle}"/>
     <ComboBox x:Name="cbFileFormats" Grid.Row="1" Style="{StaticResource comboStyle}" Text="... פורמט לייבוא" ItemsSource="{Binding Path=ImportFormats}" SelectedValue="{Binding Format, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
-      <!--, Source={StaticResource mainViewModel}}">-->
-      <!--<ComboBoxItem Content="Excel" />
-      <ComboBoxItem Content="Access" />
-      <ComboBoxItem Content="XML" />
-      <ComboBoxItem Content="Print Report &amp; Adobe Pdf" />
-      <ComboBoxItem Content="Text" />
-      <ComboBoxItem Content="dBase" />
-      <ComboBoxItem Content="AS400" />-->
+   
     </ComboBox>
 
-    <Label x:Name="lblHeader" Grid.Row="1" IsHitTestVisible="False" Margin="{Binding ElementName=cbFileFormats, Path=Margin}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Background="#CD06223A" FontFamily="Segoe UI Emoji" Foreground="#FFFDF5F5" FontWeight="Bold" Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ConverterParameter={x:Static SystemParameters.VerticalScrollBarWidth}, ElementName=cbFileFormats, Mode=OneWay}" />
+    <Label x:Name="lblHeader" Style="{StaticResource lblCombo}" Grid.Row="1" IsHitTestVisible="False" Margin="{Binding ElementName=cbFileFormats, Path=Margin}"  Height="{Binding ActualHeight, ElementName=cbFileFormats}" VerticalAlignment="{Binding VerticalAlignment, ElementName=cbFileFormats}" Content="{Binding Text, ElementName=cbFileFormats}" Width="{Binding ActualWidth, Converter={StaticResource ComboTextWidthConverter}, ConverterParameter={x:Static SystemParameters.VerticalScrollBarWidth}, ElementName=cbFileFormats, Mode=OneWay}" />
 
     <Image Source="Resources/iacslogo.png" Margin="5"/>
     <!--<Button Grid.Column="1" Grid.Row="1" Content="Button" Width="198" Height="20" Click="Button_Click" />-->
@@ -63,7 +57,7 @@
       <StackPanel x:Name="stkImport" Grid.Row="1">
       <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
         <Button x:Name="btnChooseFile" Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-        <ListView ItemsSource="{Binding ChosenFiles}"/>
+        <ListView ItemsSource="{Binding ChosenFiles }" FlowDirection="LeftToRight"/>
 
 
       </StackPanel>

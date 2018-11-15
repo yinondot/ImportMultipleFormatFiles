@@ -76,6 +76,7 @@
     <Compile Include="CommonValues\Values.cs" />
     <Compile Include="Converters\ComboNameConverter.cs" />
     <Compile Include="Converters\ComboTextWidthConverter.cs" />
+    <Compile Include="Converters\GetFileNameConverter.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="temp1.xaml.cs">
       <DependentUpon>temp1.xaml</DependentUpon>
@@ -141,7 +142,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserControls\" />
+    <Folder Include="Models\UserControls\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\iacslogo.png" />

@@ -4,14 +4,25 @@
     <Style x:Key="comboStyle" TargetType="{x:Type ComboBox}">
       <Setter Property="FlowDirection" Value="LeftToRight" />
       <Setter Property="Margin" Value="10,0,10,10" />
-      <Setter Property="Height" Value="31" />
+      <Setter Property="Height" Value="81" />
       <Setter Property="VerticalContentAlignment" Value="Center" />
       <Setter Property="HorizontalContentAlignment" Value="Center" />
       <Setter Property="Background" Value="Transparent" />
       <!--<Setter Property="" Value="" />-->
     </Style>
 
-    <Style x:Key="lblHeaderStyle" TargetType="{x:Type Label}">
+    <Style x:Key="lblCombo" TargetType="{x:Type Label}">
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="Background" Value="#CD06223A" />
+      <Setter Property="Foreground" Value="#FFFDF5F5" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="FontFamily" Value="Segoe UI Emoji" />
+      <!--<Setter Property="" Value="" />-->
+    </Style>
+
+      <Style x:Key="lblHeaderStyle" TargetType="{x:Type Label}">
       <!--<Setter Property="FlowDirection" Value="LeftToRight" />-->
       <Setter Property="Margin" Value="10,0,10,10" />
       <!--<Setter Property="Height" Value="31" />-->
