@@ -26,14 +26,8 @@ namespace ImportMultipleFormatFiles.ViewModel
       #region Commands
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
       public ChooseFileCommand ChooseFileCommand { get; set; }
-      public CheckBoxClickedCommand CheckBoxClickedCommand { get; set; }
-
-      internal void RemoveCheckedMethod()
-      {
-         throw new NotImplementedException();
-      }
-
       public CheckAllCommand CheckAllCommand { get; set; }
+      public RemoveCheckedCommand RemoveCheckedCommand { get; set; }
       #endregion
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
@@ -52,8 +46,8 @@ namespace ImportMultipleFormatFiles.ViewModel
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
-         CheckBoxClickedCommand = new CheckBoxClickedCommand(this);
          CheckAllCommand = new CheckAllCommand(this);
+         RemoveCheckedCommand = new RemoveCheckedCommand(this);
 
          Format = "";
          //  ChosenFiles = new ObservableCollection<string>();
@@ -105,7 +99,7 @@ namespace ImportMultipleFormatFiles.ViewModel
             //   ChosenFiles.Add(dlg.FileName);
             //}
 
-            if (!ChosenFiles.Any(file=>file.FullPath==dlg.FileName))
+            if (!ChosenFiles.Any(file => file.FullPath == dlg.FileName))
             {
                ChosenFiles.Add(new ChosenFile(dlg.FileName, false));
             }
@@ -126,7 +120,7 @@ namespace ImportMultipleFormatFiles.ViewModel
 
             foreach (var file in MainHelper.GetMatchingFiles(MainHelper.SavedDirectory, MainHelper.FileTypes))
             {
-               if (!ChosenFiles.Any(_file => _file.FullPath == dlg.FileName))
+               if (!ChosenFiles.Any(_file => _file.FullPath == file))
                {
                   ChosenFiles.Add(new ChosenFile(file, false));
                }
@@ -136,20 +130,22 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       }
 
-      public void CheckBoxClickedMethod(object parameter)
-      {
-         var cf = parameter as ChosenFile;
-         if (cf!=null)
-         {
-            cf.IsChecked = !cf.IsChecked;
-         }
-      }
-
       public void CheckAllMethod()
       {
          foreach (var item in ChosenFiles)
          {
             item.IsChecked = true;
+         }
+      }
+
+      internal void RemoveCheckedMethod()
+      {
+         for (int i = ChosenFiles.Count-1; i >= 0; i--)
+         {
+            if (ChosenFiles[i].isChecked==true)
+            {
+               ChosenFiles.RemoveAt(i);
+            }
          }
       }
       #endregion

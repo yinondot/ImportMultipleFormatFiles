@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace ImportMultipleFormatFiles.Commands
 {
-    class RemoveCheckedCommand:ICommand
+  public  class RemoveCheckedCommand:ICommand
    {
       public MainViewModel Vm { get; set; }
       public RemoveCheckedCommand(MainViewModel vm)
@@ -23,11 +23,11 @@ namespace ImportMultipleFormatFiles.Commands
       }
       public bool CanExecute(object parameter)
       {
-         if (Vm.ChosenFiles.Count == 0 || Vm.ChosenFiles.Any(file => file.isChecked == true))
+         if (Vm.ChosenFiles.Count != 0 && Vm.ChosenFiles.Any(file => file.isChecked == true))
          {
-            return false;
+            return true;
          }
-         return true;
+         return false;
       }
 
       public void Execute(object parameter)

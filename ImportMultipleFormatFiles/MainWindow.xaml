@@ -66,7 +66,7 @@
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
           <Button x:Name="btnChooseAll" Content="בחר הכל" Command="{Binding CheckAllCommand}"></Button>
-          <Button x:Name="btnRemoveSelected" Grid.Column="1" Content="הסר"></Button>
+          <Button x:Name="btnRemoveSelected" Grid.Column="1" Command="{Binding RemoveCheckedCommand}" Content="הסר"></Button>
         </Grid>
       </StackPanel>
     </Grid>
