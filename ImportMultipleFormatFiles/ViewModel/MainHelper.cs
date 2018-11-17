@@ -88,7 +88,11 @@ namespace ImportMultipleFormatFiles.ViewModel
        
             foreach (string fileName in temp.Where(file => file.ToLower().EndsWith(item)))
             {
-               fileList.Add(fileName);
+               if (!fileName.Contains("~"))
+               {
+                  fileList.Add(fileName);
+               }
+              
             }
          }
          return fileList;

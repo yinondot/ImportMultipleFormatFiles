@@ -1,44 +1,38 @@
-﻿using System;
+﻿using ImportMultipleFormatFiles.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using ImportMultipleFormatFiles.ViewModel;
 
 namespace ImportMultipleFormatFiles.Commands
 {
-   public class ChooseFolderCommand : ICommand
+    class RemoveCheckedCommand:ICommand
    {
       public MainViewModel Vm { get; set; }
-
-      public ChooseFolderCommand(MainViewModel vm)
+      public RemoveCheckedCommand(MainViewModel vm)
       {
-         Vm = vm;
+         this.Vm = vm;
       }
-
-
       public event EventHandler CanExecuteChanged
       {
          add { CommandManager.RequerySuggested += value; }
          remove { CommandManager.RequerySuggested -= value; }
 
       }
-
       public bool CanExecute(object parameter)
       {
-
-         return Vm.Format!="";
-
+         if (Vm.ChosenFiles.Count == 0 || Vm.ChosenFiles.Any(file => file.isChecked == true))
+         {
+            return false;
+         }
+         return true;
       }
 
       public void Execute(object parameter)
       {
-         Vm.ChooseFolderMethod();
-
+         Vm.RemoveCheckedMethod();
       }
    }
- 
-
 }

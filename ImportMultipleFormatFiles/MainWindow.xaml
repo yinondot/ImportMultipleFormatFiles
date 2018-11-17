@@ -59,8 +59,15 @@
       <Button x:Name="btnChooseFolder"  Content="Choose Folder" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
         <Button x:Name="btnChooseFile" Content="Choose File" Command="{Binding ChooseFileCommand}"/>
         <!--<ListView ItemsSource="{Binding ChosenFiles }" FlowDirection="LeftToRight"/>-->
-        <xctk:CheckListBox Height="100" Command="{Binding CheckBoxClickedCommand}" ItemsSource="{Binding ChosenFiles}" DisplayMemberPath="Name" FlowDirection="LeftToRight"/>
-
+        <xctk:CheckListBox Height="100" ItemsSource="{Binding ChosenFiles}" DisplayMemberPath="Name" SelectedMemberPath="IsChecked" FlowDirection="LeftToRight"/>
+        <Grid >
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Button x:Name="btnChooseAll" Content="בחר הכל" Command="{Binding CheckAllCommand}"></Button>
+          <Button x:Name="btnRemoveSelected" Grid.Column="1" Content="הסר"></Button>
+        </Grid>
       </StackPanel>
     </Grid>
    

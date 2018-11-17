@@ -1,24 +1,22 @@
-﻿using System;
+﻿using ImportMultipleFormatFiles.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using ImportMultipleFormatFiles.ViewModel;
 
 namespace ImportMultipleFormatFiles.Commands
 {
-   public class ChooseFolderCommand : ICommand
+
+   public class ChooseFileCommand : ICommand
    {
       public MainViewModel Vm { get; set; }
 
-      public ChooseFolderCommand(MainViewModel vm)
+      public ChooseFileCommand(MainViewModel vm)
       {
          Vm = vm;
       }
-
-
       public event EventHandler CanExecuteChanged
       {
          add { CommandManager.RequerySuggested += value; }
@@ -28,17 +26,13 @@ namespace ImportMultipleFormatFiles.Commands
 
       public bool CanExecute(object parameter)
       {
-
-         return Vm.Format!="";
-
+         return Vm.Format != "";
       }
 
       public void Execute(object parameter)
       {
-         Vm.ChooseFolderMethod();
+         Vm.ChooseFileMethod();
 
       }
    }
- 
-
 }

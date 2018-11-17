@@ -88,8 +88,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CheckAllCommand.cs" />
     <Compile Include="Commands\CheckBoxClickedCommand.cs" />
+    <Compile Include="Commands\ChooseFileCommand.cs" />
     <Compile Include="Commands\ChooseFolderCommand.cs" />
+    <Compile Include="Commands\RemoveCheckedCommand.cs" />
     <Compile Include="CommonValues\Values.cs" />
     <Compile Include="Converters\ComboNameConverter.cs" />
     <Compile Include="Converters\ComboTextWidthConverter.cs" />

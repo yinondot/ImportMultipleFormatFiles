@@ -11,7 +11,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using ImportMultipleFormatFiles.CommonValues;
-using ImportMultipleFormatFiles.Models;
 using System.IO;
 using System.Windows.Input;
 using System.Collections.Specialized;
@@ -28,6 +27,13 @@ namespace ImportMultipleFormatFiles.ViewModel
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
       public ChooseFileCommand ChooseFileCommand { get; set; }
       public CheckBoxClickedCommand CheckBoxClickedCommand { get; set; }
+
+      internal void RemoveCheckedMethod()
+      {
+         throw new NotImplementedException();
+      }
+
+      public CheckAllCommand CheckAllCommand { get; set; }
       #endregion
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
@@ -47,6 +53,7 @@ namespace ImportMultipleFormatFiles.ViewModel
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
          CheckBoxClickedCommand = new CheckBoxClickedCommand(this);
+         CheckAllCommand = new CheckAllCommand(this);
 
          Format = "";
          //  ChosenFiles = new ObservableCollection<string>();
@@ -135,6 +142,14 @@ namespace ImportMultipleFormatFiles.ViewModel
          if (cf!=null)
          {
             cf.IsChecked = !cf.IsChecked;
+         }
+      }
+
+      public void CheckAllMethod()
+      {
+         foreach (var item in ChosenFiles)
+         {
+            item.IsChecked = true;
          }
       }
       #endregion

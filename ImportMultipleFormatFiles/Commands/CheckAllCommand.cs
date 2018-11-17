@@ -4,41 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using ImportMultipleFormatFiles.ViewModel;
 
 namespace ImportMultipleFormatFiles.Commands
 {
-   public class ChooseFolderCommand : ICommand
+   public class CheckAllCommand : ICommand
    {
       public MainViewModel Vm { get; set; }
-
-      public ChooseFolderCommand(MainViewModel vm)
+      public CheckAllCommand(MainViewModel vm)
       {
-         Vm = vm;
+         this.Vm = vm;
       }
-
-
       public event EventHandler CanExecuteChanged
       {
          add { CommandManager.RequerySuggested += value; }
          remove { CommandManager.RequerySuggested -= value; }
 
       }
-
       public bool CanExecute(object parameter)
       {
-
-         return Vm.Format!="";
-
+         if (Vm.ChosenFiles.Count == 0)
+         {
+            return false;
+         }
+         return true;
       }
 
       public void Execute(object parameter)
       {
-         Vm.ChooseFolderMethod();
-
+         Vm.CheckAllMethod();
       }
    }
- 
-
 }
