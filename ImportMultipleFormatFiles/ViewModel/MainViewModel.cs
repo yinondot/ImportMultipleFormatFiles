@@ -15,16 +15,25 @@ using System.IO;
 using System.Windows.Input;
 using System.Collections.Specialized;
 using System.Windows.Forms;
+using System.Windows;
+using UtiltyCasewareIdea;
+using ImportMultipleFormatFiles.CommonValues;
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
    public class MainViewModel : INotifyPropertyChanged
    {
-      private List<string> formats = Values.Formats;
-
+      private List<string> formats = CommonValues.Values.Formats;
+      
 
       #region Commands
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
+
+      internal void ChooseDefinitionFileMethod()
+      {
+         throw new NotImplementedException();
+      }
+
       public ChooseFileCommand ChooseFileCommand { get; set; }
       public CheckAllCommand CheckAllCommand { get; set; }
       public RemoveCheckedCommand RemoveCheckedCommand { get; set; }
@@ -42,6 +51,7 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       private void Initialize()
       {
+         CommonValues.Values.Idea_Type=UtiltyCasewareIdea.UtilityCasewareIdea.GetIdeaType();
          ImportFormats = new ReadOnlyCollection<string>(formats);
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
@@ -50,6 +60,7 @@ namespace ImportMultipleFormatFiles.ViewModel
          RemoveCheckedCommand = new RemoveCheckedCommand(this);
 
          Format = "";
+         Visible = Visibility.Hidden;
          //  ChosenFiles = new ObservableCollection<string>();
          ChosenFiles = new ObservableCollection<ChosenFile>();
 
@@ -57,7 +68,7 @@ namespace ImportMultipleFormatFiles.ViewModel
       }
 
       public event PropertyChangedEventHandler PropertyChanged;
-      public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
+   //   public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
 
       private string format = "";
       public string Format  // specifies the file format chosen
@@ -69,13 +80,29 @@ namespace ImportMultipleFormatFiles.ViewModel
             {
                format = value;
                OnPropertyChanged("Format");
-               MainHelper.SetFileTypes(Format);
-
+               MainHelper.SetFileTypesAndBtnDefinitionVisibility(this);
+               
                ChosenFiles.Clear();
 
             }
          }
       }
+
+      private Visibility visible;
+
+      public Visibility Visible
+      {
+         get { return visible; }
+         set {
+            if (visible != value)
+            {
+               visible = value;
+               OnPropertyChanged("Visible");
+            }
+               
+         }
+      }
+
 
 
       private void OnPropertyChanged(string propName)

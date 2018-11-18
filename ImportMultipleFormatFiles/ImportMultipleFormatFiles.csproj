@@ -89,6 +89,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\CheckAllCommand.cs" />
+    <Compile Include="Commands\ChooseDefinitionFileCommand.cs" />
     <Compile Include="Commands\ChooseFileCommand.cs" />
     <Compile Include="Commands\ChooseFolderCommand.cs" />
     <Compile Include="Commands\RemoveCheckedCommand.cs" />

@@ -15,57 +15,65 @@ namespace ImportMultipleFormatFiles.ViewModel
       {
          SavedDirectory = UtilityCasewareIdea.GetProjectDirectory() + @"Source Files.ILB";
          FileTypes = new List<string>();
+         DefinitionFileType = "";
       }
       public static string SavedDirectory { get; set; }
       public static List<string> FileTypes { get; set; }
-    
-      public static void SetFileTypes(string format)
+      public static string DefinitionFileType { get; set; }
+
+      public static void SetFileTypesAndBtnDefinitionVisibility(MainViewModel vm)
       {
          FileTypes.Clear();
-         switch (format)
+         switch (vm.Format)
          {
             case "Excel":
                {
-                  FileTypes.Add(".xls");
-                  FileTypes.Add(".xlsx");
+                  FileTypes.Add("xls");
+                  FileTypes.Add("xlsx");
+                  vm.Visible = System.Windows.Visibility.Hidden;
+
                   break;
                }
             case "Access":
                {
-                  FileTypes.Add(".mdb");
-                  FileTypes.Add(".accdb");
+                  FileTypes.Add("mdb");
+                  FileTypes.Add("accdb");
+                  vm.Visible = System.Windows.Visibility.Hidden;
                   break;
                }
             case "XML":
                {
-                  FileTypes.Add(".xml");
+                  FileTypes.Add("xml");
+                  vm.Visible = System.Windows.Visibility.Hidden;
                   break;
                }
             case "Print Report & Adobe Pdf":
                {
-                  FileTypes.Add(".pdf");
-                  FileTypes.Add(".prn");
-                  FileTypes.Add(".lis");
-                  FileTypes.Add(".txt");
-
+                  FileTypes.Add("pdf");
+                  FileTypes.Add("prn");
+                  FileTypes.Add("lis");
+                  FileTypes.Add("txt");
+                  vm.Visible = System.Windows.Visibility.Visible;
+                  DefinitionFileType = "jpm";
                   break;
                }
             case "Text":
                {
-                  FileTypes.Add(".txt");
-                  FileTypes.Add(".asc");
-                  FileTypes.Add(".csv");
-
+                  FileTypes.Add("txt");
+                  FileTypes.Add("asc");
+                  FileTypes.Add("csv");
+                  vm.Visible = System.Windows.Visibility.Visible;
                   break;
                }
             case "dBase":
                {
-                  FileTypes.Add(".dbf");
+                  FileTypes.Add("dbf");
                   break;
                }
             case "AS400":
                {
-                  FileTypes.Add(".dat");
+                  FileTypes.Add("dat");
+                  vm.Visible = System.Windows.Visibility.Visible;
                   break;
                }
 
@@ -83,7 +91,7 @@ namespace ImportMultipleFormatFiles.ViewModel
          List<string> fileList = new List<string>();
          foreach (var item in filters)
          {
-            string[] temp = (Directory.GetFiles(directory, "*" + item));
+            string[] temp = (Directory.GetFiles(directory, "*." + item));
             
        
             foreach (string fileName in temp.Where(file => file.ToLower().EndsWith(item)))

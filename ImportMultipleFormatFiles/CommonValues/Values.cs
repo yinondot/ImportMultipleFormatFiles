@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UtiltyCasewareIdea;
 
 namespace ImportMultipleFormatFiles.CommonValues
 {
@@ -12,5 +13,7 @@ namespace ImportMultipleFormatFiles.CommonValues
       {
          "Excel","Access","XML","Print Report & Adobe Pdf","Text","dBase","AS400"
       };
+
+      public static IdeaType Idea_Type { get; set; }
    }
 }
