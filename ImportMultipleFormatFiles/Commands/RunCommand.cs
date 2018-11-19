@@ -8,10 +8,10 @@ using System.Windows.Input;
 
 namespace ImportMultipleFormatFiles.Commands
 {
-  public  class RemoveCheckedCommand:ICommand
-   {
+  public  class RunCommand : ICommand
+    {
       public MainViewModel Vm { get; set; }
-      public RemoveCheckedCommand(MainViewModel vm)
+      public RunCommand(MainViewModel vm)
       {
          this.Vm = vm;
       }
@@ -23,17 +23,20 @@ namespace ImportMultipleFormatFiles.Commands
       }
       public bool CanExecute(object parameter)
       {
-         return true;
-         //if (Vm.ChosenFiles.Count != 0 && Vm.ChosenFiles.Any(file => file.isChecked == true))
-         //{
-         //   return true;
-         //}
-         //return false;
+
+         if (Vm.ChosenFiles.Any(file => file.IsChecked == true) && ((Vm.Visible==System.Windows.Visibility.Visible && Vm.DefinitionFilePath != "") || Vm.Visible == System.Windows.Visibility.Hidden) )
+         {
+            return true;
+         }
+         return false;
       }
 
-      public void Execute(object parameter)
+      public  void Execute(object parameter)
       {
-         Vm.RemoveCheckedMethod();
+         //Task task=new Task(()=> Vm.RunMethod());
+         // task.Start();
+         Vm.RunMethod();
       }
    }
 }
+

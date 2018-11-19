@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImportMultipleFormatFiles.Properties
+namespace ModelsHouse.Properties
 {
 
 

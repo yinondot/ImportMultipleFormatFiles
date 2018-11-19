@@ -63,6 +63,14 @@ namespace ImportMultipleFormatFiles.ViewModel
                   FileTypes.Add("asc");
                   FileTypes.Add("csv");
                   vm.Visible = System.Windows.Visibility.Visible;
+                  if (CommonValues.Values.Idea_Type==IdeaType.UNICODE)
+                  {
+                     DefinitionFileType = "rdm";
+                  }
+                  else
+                  {
+                     DefinitionFileType = "rdf";
+                  }
                   break;
                }
             case "dBase":
@@ -74,6 +82,7 @@ namespace ImportMultipleFormatFiles.ViewModel
                {
                   FileTypes.Add("dat");
                   vm.Visible = System.Windows.Visibility.Visible;
+                  DefinitionFileType = "fdf";
                   break;
                }
 
@@ -105,13 +114,20 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
          return fileList;
       }
+      internal static string GetDefinitionFilterString(string definitionStr)
+      {
+         string temp = "";
+         temp = " |*." + definitionStr;
+         return temp;
+      }
+
 
       internal static string GetFilterString(List<string> fileTypes,string format)
       {
          string temp = "";
          foreach (string item in fileTypes) // assumes filetypes are of the pattern ".xls"
          {
-            temp = temp + "*" + item+";";
+            temp = temp + "*." + item+";";
          }
          temp = temp.Remove(temp.Length - 1, 1);
          temp = format + "|" + temp ;

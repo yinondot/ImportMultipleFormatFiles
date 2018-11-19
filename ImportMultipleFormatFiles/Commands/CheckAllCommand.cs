@@ -23,10 +23,10 @@ namespace ImportMultipleFormatFiles.Commands
       }
       public bool CanExecute(object parameter)
       {
-         if (Vm.ChosenFiles.Count == 0)
-         {
-            return false;
-         }
+         //if (Vm.ChosenFiles.Count == 0)
+         //{
+         //   return false;
+         //}
          return true;
       }
 

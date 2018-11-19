@@ -34,11 +34,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IACS License">
+      <HintPath>dlls\IACS License.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
@@ -59,6 +64,7 @@
     <Reference Include="UIAutomationTypes" />
     <Reference Include="UtiltyCasewareIdea">
       <HintPath>dlls\UtiltyCasewareIdea.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -93,15 +99,11 @@
     <Compile Include="Commands\ChooseFileCommand.cs" />
     <Compile Include="Commands\ChooseFolderCommand.cs" />
     <Compile Include="Commands\RemoveCheckedCommand.cs" />
+    <Compile Include="Commands\RunCommand.cs" />
     <Compile Include="CommonValues\Values.cs" />
     <Compile Include="Converters\ComboNameConverter.cs" />
     <Compile Include="Converters\ComboTextWidthConverter.cs" />
     <Compile Include="Converters\GetFileNameConverter.cs" />
-    <Compile Include="Models\ChosenFile.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="temp1.xaml.cs">
-      <DependentUpon>temp1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="temp2.xaml.cs">
       <DependentUpon>temp2.xaml</DependentUpon>
     </Compile>
@@ -122,10 +124,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="temp1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="temp2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,11 +160,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\UserControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\iacslogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelsHouse\ModelsHouse.csproj">
+      <Project>{829d5673-9655-4fde-bc0b-61e4c5ed9a17}</Project>
+      <Name>ModelsHouse</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{9269b6f7-c0da-4d16-83e3-27a1ad5f1be2}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

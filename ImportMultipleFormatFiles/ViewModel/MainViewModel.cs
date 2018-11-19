@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImportMultipleFormatFiles.Models;
 using ImportMultipleFormatFiles.Converters;
 using ImportMultipleFormatFiles.Commands;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -17,26 +16,27 @@ using System.Collections.Specialized;
 using System.Windows.Forms;
 using System.Windows;
 using UtiltyCasewareIdea;
-using ImportMultipleFormatFiles.CommonValues;
+using System.Threading;
+using ModelsHouse.Models;
+using Services;
+
 
 namespace ImportMultipleFormatFiles.ViewModel
 {
    public class MainViewModel : INotifyPropertyChanged
    {
       private List<string> formats = CommonValues.Values.Formats;
-      
+
+
+
 
       #region Commands
       public ChooseFolderCommand ChooseFolderCommand { get; set; }
-
-      internal void ChooseDefinitionFileMethod()
-      {
-         throw new NotImplementedException();
-      }
-
       public ChooseFileCommand ChooseFileCommand { get; set; }
       public CheckAllCommand CheckAllCommand { get; set; }
       public RemoveCheckedCommand RemoveCheckedCommand { get; set; }
+      public ChooseDefinitionFileCommand ChooseDefinitionFileCommand { get; set; }
+      public RunCommand TempAsyncTestForDeletionCommand { get; set; }
       #endregion
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
@@ -49,26 +49,32 @@ namespace ImportMultipleFormatFiles.ViewModel
          Initialize();
       }
 
-      private void Initialize()
+      private async void Initialize()
       {
-         CommonValues.Values.Idea_Type=UtiltyCasewareIdea.UtilityCasewareIdea.GetIdeaType();
+         Task<IdeaType> task = new Task<IdeaType>(UtilityCasewareIdea.GetIdeaType);
+         task.Start();
+         CommonValues.Values.Idea_Type = UtilityCasewareIdea.GetIdeaType();
          ImportFormats = new ReadOnlyCollection<string>(formats);
 
          ChooseFolderCommand = new ChooseFolderCommand(this);
          ChooseFileCommand = new ChooseFileCommand(this);
          CheckAllCommand = new CheckAllCommand(this);
          RemoveCheckedCommand = new RemoveCheckedCommand(this);
+         ChooseDefinitionFileCommand = new ChooseDefinitionFileCommand(this);
+         TempAsyncTestForDeletionCommand = new RunCommand(this);
 
          Format = "";
          Visible = Visibility.Hidden;
          //  ChosenFiles = new ObservableCollection<string>();
          ChosenFiles = new ObservableCollection<ChosenFile>();
 
-         MainHelper.LoadThisStaticClass = false;
+         MainHelper.LoadThisStaticClass = false;// dong this inorder to load the static class so not to block the UI.
+
+         CommonValues.Values.Idea_Type = await task;
       }
 
       public event PropertyChangedEventHandler PropertyChanged;
-   //   public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
+      //   public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
 
       private string format = "";
       public string Format  // specifies the file format chosen
@@ -81,7 +87,7 @@ namespace ImportMultipleFormatFiles.ViewModel
                format = value;
                OnPropertyChanged("Format");
                MainHelper.SetFileTypesAndBtnDefinitionVisibility(this);
-               
+               DefinitionFilePath = "";
                ChosenFiles.Clear();
 
             }
@@ -89,20 +95,34 @@ namespace ImportMultipleFormatFiles.ViewModel
       }
 
       private Visibility visible;
-
       public Visibility Visible
       {
          get { return visible; }
-         set {
+         set
+         {
             if (visible != value)
             {
                visible = value;
                OnPropertyChanged("Visible");
             }
-               
+
          }
       }
 
+      private string definitionFilePath;
+
+      public string DefinitionFilePath
+      {
+         get { return definitionFilePath; }
+         set {
+            if (definitionFilePath != value)
+            {
+               definitionFilePath = value;
+               OnPropertyChanged("DefinitionFilePath");
+            }
+
+         }
+      }
 
 
       private void OnPropertyChanged(string propName)
@@ -159,6 +179,7 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       public void CheckAllMethod()
       {
+        
          foreach (var item in ChosenFiles)
          {
             item.IsChecked = true;
@@ -167,12 +188,38 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       internal void RemoveCheckedMethod()
       {
-         for (int i = ChosenFiles.Count-1; i >= 0; i--)
+         for (int i = ChosenFiles.Count - 1; i >= 0; i--)
          {
-            if (ChosenFiles[i].isChecked==true)
+            if (ChosenFiles[i].isChecked == true)
             {
                ChosenFiles.RemoveAt(i);
             }
+         }
+      }
+
+      internal void ChooseDefinitionFileMethod()
+      {
+         OpenFileDialog dlg = new OpenFileDialog();
+
+         dlg.InitialDirectory = MainHelper.SavedDirectory;
+         dlg.Filter = MainHelper.GetDefinitionFilterString(MainHelper.DefinitionFileType);
+         if (dlg.ShowDialog() == DialogResult.OK)
+         {
+            MainHelper.SavedDirectory = Path.GetDirectoryName(dlg.FileName);
+            DefinitionFilePath = dlg.FileName;
+
+         }
+      }
+
+      internal async void RunMethod()
+      {
+         ImportFormats importFormats = new ImportFormats();
+         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath));
+         task.Start();
+
+         if (await task=="")
+         {
+            System.Windows.MessageBox.Show("הסתיים בהצלחה");
          }
       }
       #endregion
