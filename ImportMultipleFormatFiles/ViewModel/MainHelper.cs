@@ -21,7 +21,7 @@ namespace ImportMultipleFormatFiles.ViewModel
       public static List<string> FileTypes { get; set; }
       public static string DefinitionFileType { get; set; }
 
-      public static void SetFileTypesAndBtnDefinitionVisibility(MainViewModel vm)
+      public static void SetFileTypesAndBtnDefinition_CheckBoxVisibility(MainViewModel vm)
       {
          FileTypes.Clear();
          switch (vm.Format)
@@ -31,7 +31,7 @@ namespace ImportMultipleFormatFiles.ViewModel
                   FileTypes.Add("xls");
                   FileTypes.Add("xlsx");
                   vm.Visible = System.Windows.Visibility.Hidden;
-
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Visible;
                   break;
                }
             case "Access":
@@ -39,12 +39,14 @@ namespace ImportMultipleFormatFiles.ViewModel
                   FileTypes.Add("mdb");
                   FileTypes.Add("accdb");
                   vm.Visible = System.Windows.Visibility.Hidden;
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   break;
                }
             case "XML":
                {
                   FileTypes.Add("xml");
                   vm.Visible = System.Windows.Visibility.Hidden;
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   break;
                }
             case "Print Report & Adobe Pdf":
@@ -55,6 +57,7 @@ namespace ImportMultipleFormatFiles.ViewModel
                   FileTypes.Add("txt");
                   vm.Visible = System.Windows.Visibility.Visible;
                   DefinitionFileType = "jpm";
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   break;
                }
             case "Text":
@@ -63,6 +66,7 @@ namespace ImportMultipleFormatFiles.ViewModel
                   FileTypes.Add("asc");
                   FileTypes.Add("csv");
                   vm.Visible = System.Windows.Visibility.Visible;
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   if (CommonValues.Values.Idea_Type==IdeaType.UNICODE)
                   {
                      DefinitionFileType = "rdm";
@@ -76,12 +80,15 @@ namespace ImportMultipleFormatFiles.ViewModel
             case "dBase":
                {
                   FileTypes.Add("dbf");
+                  vm.Visible = System.Windows.Visibility.Hidden;
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   break;
                }
             case "AS400":
                {
                   FileTypes.Add("dat");
                   vm.Visible = System.Windows.Visibility.Visible;
+                  vm.CheckBoxVisiblity = System.Windows.Visibility.Hidden;
                   DefinitionFileType = "fdf";
                   break;
                }

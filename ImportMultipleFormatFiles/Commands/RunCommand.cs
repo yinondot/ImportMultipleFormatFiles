@@ -23,7 +23,7 @@ namespace ImportMultipleFormatFiles.Commands
       }
       public bool CanExecute(object parameter)
       {
-
+        
          if (Vm.ChosenFiles.Any(file => file.IsChecked == true) && ((Vm.Visible==System.Windows.Visibility.Visible && Vm.DefinitionFilePath != "") || Vm.Visible == System.Windows.Visibility.Hidden) )
          {
             return true;
@@ -35,7 +35,12 @@ namespace ImportMultipleFormatFiles.Commands
       {
          //Task task=new Task(()=> Vm.RunMethod());
          // task.Start();
-         Vm.RunMethod();
+         if (Vm.CanRun==true)
+         {
+            Vm.CanRun = false; ;
+            Vm.RunMethod();
+         }
+       
       }
    }
 }

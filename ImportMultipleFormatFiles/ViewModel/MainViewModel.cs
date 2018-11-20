@@ -36,7 +36,7 @@ namespace ImportMultipleFormatFiles.ViewModel
       public CheckAllCommand CheckAllCommand { get; set; }
       public RemoveCheckedCommand RemoveCheckedCommand { get; set; }
       public ChooseDefinitionFileCommand ChooseDefinitionFileCommand { get; set; }
-      public RunCommand TempAsyncTestForDeletionCommand { get; set; }
+      public RunCommand RunCommand { get; set; }
       #endregion
 
       public ReadOnlyCollection<string> ImportFormats { get; set; }
@@ -61,10 +61,12 @@ namespace ImportMultipleFormatFiles.ViewModel
          CheckAllCommand = new CheckAllCommand(this);
          RemoveCheckedCommand = new RemoveCheckedCommand(this);
          ChooseDefinitionFileCommand = new ChooseDefinitionFileCommand(this);
-         TempAsyncTestForDeletionCommand = new RunCommand(this);
+         RunCommand = new RunCommand(this);
 
          Format = "";
          Visible = Visibility.Hidden;
+         checkBoxVisiblity = Visibility.Hidden;
+         CanRun = true;
          //  ChosenFiles = new ObservableCollection<string>();
          ChosenFiles = new ObservableCollection<ChosenFile>();
 
@@ -86,7 +88,7 @@ namespace ImportMultipleFormatFiles.ViewModel
             {
                format = value;
                OnPropertyChanged("Format");
-               MainHelper.SetFileTypesAndBtnDefinitionVisibility(this);
+               MainHelper.SetFileTypesAndBtnDefinition_CheckBoxVisibility(this);
                DefinitionFilePath = "";
                ChosenFiles.Clear();
 
@@ -109,8 +111,37 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
-      private string definitionFilePath;
+      private Visibility checkBoxVisiblity;
+      public Visibility CheckBoxVisiblity
+      {
+         get { return checkBoxVisiblity; }
+         set
+         {
+            if (checkBoxVisiblity != value)
+            {
+               checkBoxVisiblity = value;
+               OnPropertyChanged("CheckBoxVisiblity");
+            }
 
+         }
+      }
+
+      private bool? ischecked;
+      public bool? Ischecked
+      {
+         get { return ischecked; }
+         set
+         {
+            if (ischecked != value)
+            {
+               ischecked = value;
+               OnPropertyChanged("Ischecked");
+            }
+
+         }
+      }
+
+      private string definitionFilePath;
       public string DefinitionFilePath
       {
          get { return definitionFilePath; }
@@ -124,6 +155,20 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
+      private bool canRun;
+      public bool CanRun
+      {
+         get { return canRun; }
+         set
+         {
+            if (canRun != value)
+            {
+               canRun = value;
+               //OnPropertyChanged("CanRun");
+            }
+
+         }
+      }
 
       private void OnPropertyChanged(string propName)
       {
@@ -214,13 +259,14 @@ namespace ImportMultipleFormatFiles.ViewModel
       internal async void RunMethod()
       {
          ImportFormats importFormats = new ImportFormats();
-         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath));
+         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath,Ischecked));
          task.Start();
 
          if (await task=="")
          {
             System.Windows.MessageBox.Show("הסתיים בהצלחה");
          }
+         CanRun = true; ;
       }
       #endregion
 
