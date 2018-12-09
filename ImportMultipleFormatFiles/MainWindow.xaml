@@ -6,6 +6,7 @@
     <Converters:ComboTextWidthConverter x:Key="ComboTextWidthConverter" />
     <vm:MainViewModel x:Key="mainViewModel" />
     <Converters:GetFileNameConverter x:Key="GetFileNameConverter" />
+    
   </Window.Resources>
 
   <Window.DataContext>
@@ -23,7 +24,7 @@
     </Grid.RowDefinitions>
 
     <Label Grid.Column="1" Content="ייבוא קבצים בפורמטים שונים" Style="{StaticResource lblHeaderStyle}" />
-    <ComboBox x:Name="cbFileFormats" Grid.Row="1" Style="{StaticResource comboStyle}" Text="... פורמט לייבוא" ItemsSource="{Binding Path=ImportFormats}" SelectedValue="{Binding Format, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
+    <ComboBox x:Name="cbFileFormats" Grid.Row="1" Style="{StaticResource comboStyle}" Text="פורמט לייבוא ... " ItemsSource="{Binding Path=ImportFormats}" SelectedValue="{Binding Format, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
 
     </ComboBox>
 
@@ -47,12 +48,12 @@
                  Fill="#FFDBD9F0">
       </Rectangle>-->
 
-      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ElementName=cbFileFormats, Path=SelectedValue, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+      <TextBlock Grid.ColumnSpan="10" x:Name="lblHeading" FontWeight="Medium" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ElementName=cbFileFormats, Path=SelectedValue, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
 
 
       <StackPanel x:Name="stkImport" Grid.Row="1">
-        <Button x:Name="btnChooseFolder" Content="בחר תיקייה" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
-        <Button x:Name="btnChooseFile" Content="בחר קובץ" Command="{Binding ChooseFileCommand}" />
+        <Button x:Name="btnChooseFolder" FontSize="15" Content="בחר תיקייה" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
+        <Button x:Name="btnChooseFile" FontSize="15" Content="בחר קובץ" Command="{Binding ChooseFileCommand}" />
         <!--<ListView ItemsSource="{Binding ChosenFiles }" FlowDirection="LeftToRight"/>-->
         <xctk:CheckListBox Height="180" ItemsSource="{Binding ChosenFiles}" DisplayMemberPath="Name" SelectedMemberPath="IsChecked" FlowDirection="LeftToRight" />
         <Grid>
@@ -60,8 +61,8 @@
             <ColumnDefinition />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
-          <Button x:Name="btnChooseAll" Content="בחר הכל" Command="{Binding CheckAllCommand}"></Button>
-          <Button x:Name="btnRemoveSelected" Grid.Column="1" Command="{Binding RemoveCheckedCommand}" Content="הסר"></Button>
+          <Button x:Name="btnChooseAll" FontSize="15" Content="בחר הכל" Command="{Binding CheckAllCommand}"></Button>
+          <Button x:Name="btnRemoveSelected" FontSize="15" Grid.Column="1" Command="{Binding RemoveCheckedCommand}" Content="הסר"></Button>
         </Grid>
       </StackPanel>
 
@@ -77,8 +78,8 @@
           <ColumnDefinition Width="6*" />
           <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        
-        <CheckBox x:Name="cbFrstLineHeader" Grid.Row="0" Grid.ColumnSpan="2" FlowDirection="RightToLeft" IsChecked="{Binding Ischecked, Mode=OneWayToSource}" Visibility="{Binding CheckBoxVisiblity, UpdateSourceTrigger=PropertyChanged}" Content="האם השורה הראשונה היא שורת כותרת" VerticalAlignment="Center" Margin="14" HorizontalContentAlignment="Left">
+
+        <CheckBox x:Name="cbFrstLineHeader" Grid.Row="0" Grid.ColumnSpan="2" FlowDirection="RightToLeft" IsChecked="{Binding Ischecked, Mode=OneWayToSource}" Visibility="{Binding CheckBoxVisiblity, UpdateSourceTrigger=PropertyChanged}" Content="האם השורה הראשונה היא שורת כותרת" VerticalAlignment="Center" Margin="14" HorizontalContentAlignment="Left" FontSize="14">
           <CheckBox.Resources>
             <Style TargetType="{x:Type Path}">
               <Setter Property="FlowDirection" Value="LeftToRight" />
@@ -88,8 +89,8 @@
         </CheckBox>
         <Button x:Name="btnDefinitionFile" Content="בחר קובץ הגדרות..." Visibility="{Binding Visible}" Command="{Binding ChooseDefinitionFileCommand}" Margin="14" />
         <TextBlock x:Name="tbDefinitonFileName" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14" VerticalAlignment="Center" />
-        <Button Content="הרץ" Command="{Binding RunCommand}"
-                HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Width="76" Grid.Column="1" />
+        <Button Content="הרץ" FontSize="15" Command="{Binding RunCommand}"
+                HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Width="76" Height="30"  Grid.Column="1" />
       </Grid>
 
     </Grid>

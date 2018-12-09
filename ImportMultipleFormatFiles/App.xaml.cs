@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using UtiltyCasewareIdea;
 
 namespace ImportMultipleFormatFiles
 {
@@ -13,5 +14,19 @@ namespace ImportMultipleFormatFiles
    /// </summary>
    public partial class App : Application
    {
+      public App()
+      {
+         try
+         {
+            //Task.Factory.StartNew(()=> UtilityCasewareIdea.ShowWindow());
+            UtilityCasewareIdea.ShowWindow();
+         }
+         catch (Exception ex)
+         {
+
+            MessageBox.Show(ex.Message + "App Start");
+         }
+         
+      }
    }
 }

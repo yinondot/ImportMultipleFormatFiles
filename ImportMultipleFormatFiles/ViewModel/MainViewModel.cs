@@ -46,7 +46,16 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       public MainViewModel()
       {
-         Initialize();
+         try
+         {
+            Initialize();
+         }
+         catch (Exception ex)
+         {
+
+            System.Windows.MessageBox.Show(ex.Message + " On Initialize");
+         }
+        
       }
 
       private async void Initialize()

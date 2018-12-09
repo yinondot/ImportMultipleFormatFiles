@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ModelsHouse.Models;
 using Interop.IdeaLib;
 using UtiltyCasewareIdea;
 using System.Collections.ObjectModel;
-using ModelsHouse.Models;
-using System.Threading;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Data.OleDb;
 using System.Data;
+using Microsoft.Win32;
+using COMMONIDEACONTROLSLib;
 
 namespace Services
 {
@@ -28,7 +26,6 @@ namespace Services
 
             string newFileName;
             string runningFile = "";
-            string filename = "";
             string dbname;
 
             switch (format)
@@ -195,14 +192,22 @@ namespace Services
                         {
 
                            runningFile = item.FullPath;
+                        
+                           string outputFileName="";
 
                            task = client.GetImportTask("ImportXML");
                            //filename = LbxFilesOut.GetItemText(item);
                            //filename = ("\\" + filename);
                            task.InputFileName = (item.FullPath);
                            newFileName = Path.GetFileNameWithoutExtension(item.FullPath);
-                           task.OutputFileName = client.UniqueFileName(newFileName);
+                         outputFileName=  task.OutputFileName = client.UniqueFileName(newFileName);
                            task.PerformTask();
+
+                           string xsdFileName =Path.GetDirectoryName(item.FullPath) +"\\"+ Path.GetFileNameWithoutExtension(item.FullPath) + ".xsd";
+                           if (File.Exists(xsdFileName))
+                           {
+                              RemoveSchema(outputFileName);
+                           }
 
                            Marshal.ReleaseComObject(task);
                            task = null;
@@ -323,11 +328,11 @@ namespace Services
 
 
                #endregion
-               #region xml
+               #region Print Report & Adobe Pdf
                case "Print Report & Adobe Pdf":
                   {
 
-                     dynamic task = null;
+                  
                      foreach (var item in chosenFiles.Where(file => file.IsChecked == true))
                      {
                         try
@@ -371,16 +376,55 @@ namespace Services
          }
          catch (Exception ex)
          {
-
             return (ex.Message);
          }
          finally
          {
             UtilityCasewareIdea.DisposeCom(client);
          }
-
-
          return "";
+      }
+
+      public static void RemoveSchema(string fileName)
+      {
+         IdeaClient client = null;
+         object oldVal = -1;
+         try
+         {
+            client = new IdeaClient();
+            oldVal = Registry.GetValue(@"HKEY_CURRENT_USER\Software\CaseWare IDEA\CaseWare IDEA\Config", "DoNotDeleteNaturalFields", -1);
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\CaseWare IDEA\CaseWare IDEA\Config", "DoNotDeleteNaturalFields", 0);
+         }
+         catch (Exception)
+         {
+
+            return;
+         }
+
+
+         IdeaDatabase db = client.OpenDatabase(fileName);
+         dynamic task = db.TableManagement();
+         task.RemoveField("SCHEMALOCATION");
+         task.PerformTask();
+
+         db.Close();
+         UtilityCasewareIdea.DisposeCom(client);
+         UtilityCasewareIdea.DisposeCom(db);
+         UtilityCasewareIdea.DisposeCom(task);
+         if ((int)oldVal == 1)
+         {
+            try
+            {
+               Registry.SetValue(@"HKEY_CURRENT_USER\Software\CaseWare IDEA\CaseWare IDEA\Config", "DoNotDeleteNaturalFields", (int)oldVal);
+            }
+            catch (Exception)
+            {
+
+               return;
+            }
+
+         }
+
       }
 
       private static List<string> getExcelSheetNames(string fileName)
