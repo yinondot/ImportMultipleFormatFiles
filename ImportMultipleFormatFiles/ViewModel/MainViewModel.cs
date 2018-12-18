@@ -135,16 +135,31 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
-      private bool? ischecked;
-      public bool? Ischecked
+      private bool? ischeckedFirstRow;
+      public bool? IscheckedFirstRow
       {
-         get { return ischecked; }
+         get { return ischeckedFirstRow; }
          set
          {
-            if (ischecked != value)
+            if (ischeckedFirstRow != value)
             {
-               ischecked = value;
-               OnPropertyChanged("Ischecked");
+               ischeckedFirstRow = value;
+               OnPropertyChanged("IscheckedFirstRow");
+            }
+
+         }
+      }
+
+      private bool? ischeckedEmptyZeros;
+      public bool? IscheckedEmptyZeros
+      {
+         get { return ischeckedEmptyZeros; }
+         set
+         {
+            if (ischeckedEmptyZeros != value)
+            {
+               ischeckedEmptyZeros = value;
+               OnPropertyChanged("IscheckedEmptyZeros");
             }
 
          }
@@ -268,7 +283,7 @@ namespace ImportMultipleFormatFiles.ViewModel
       internal async void RunMethod()
       {
          ImportFormats importFormats = new ImportFormats();
-         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath,Ischecked));
+         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath,IscheckedFirstRow,IscheckedEmptyZeros));
          task.Start();
 
          if (await task=="")

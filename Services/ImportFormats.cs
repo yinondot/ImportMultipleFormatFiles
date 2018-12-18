@@ -16,7 +16,7 @@ namespace Services
 {
    public class ImportFormats
    {
-      public string Start(ObservableCollection<ChosenFile> chosenFiles, string format, string definitionFilePath, bool? isFirstRowHeader)
+      public string Start(ObservableCollection<ChosenFile> chosenFiles, string format, string definitionFilePath, bool? isFirstRowHeader, bool? isEmptyRowsZeros)
       {
          IdeaClient client = null;
          try
@@ -40,14 +40,23 @@ namespace Services
                      {
                         try
                         {
-                           bool isHeader = false;
+                           bool _isFirstRowHeader = false;
                            if (isFirstRowHeader == null || isFirstRowHeader == false)
                            {
-                              isHeader = false;
+                              _isFirstRowHeader = false;
                            }
                            else
                            {
-                              isHeader = true;
+                              _isFirstRowHeader = true;
+                           }
+                           bool _isEmptyCellsZero = false;
+                           if (isEmptyRowsZeros == null || isEmptyRowsZeros == false)
+                           {
+                              _isEmptyCellsZero = false;
+                           }
+                           else
+                           {
+                              _isEmptyCellsZero = true;
                            }
                            runningFile = item.FullPath;
                            _sheets = getExcelSheetNames(item.FullPath);
@@ -57,13 +66,13 @@ namespace Services
                               newSheetName = newSheetName.Replace("'", "");
                               task = client.GetImportTask("ImportExcel");
 
-                              task.FirstRowIsFieldName = isHeader;
+                              task.FirstRowIsFieldName = _isFirstRowHeader;
+                              task.EmptyNumericFieldAsZero = _isEmptyCellsZero;
                               task.SheetToImport = newSheetName;
                               task.FileToImport = item.FullPath;
                               newFileName = Path.GetFileNameWithoutExtension(item.FullPath);
 
                               task.OutputFilePrefix = newFileName;
-                              task.EmptyNumericFieldAsZero = false;
                               task.UniqueFilePrefix();
                               task.PerformTask();
 
@@ -192,18 +201,18 @@ namespace Services
                         {
 
                            runningFile = item.FullPath;
-                        
-                           string outputFileName="";
+
+                           string outputFileName = "";
 
                            task = client.GetImportTask("ImportXML");
                            //filename = LbxFilesOut.GetItemText(item);
                            //filename = ("\\" + filename);
                            task.InputFileName = (item.FullPath);
                            newFileName = Path.GetFileNameWithoutExtension(item.FullPath);
-                         outputFileName=  task.OutputFileName = client.UniqueFileName(newFileName);
+                           outputFileName = task.OutputFileName = client.UniqueFileName(newFileName);
                            task.PerformTask();
 
-                           string xsdFileName =Path.GetDirectoryName(item.FullPath) +"\\"+ Path.GetFileNameWithoutExtension(item.FullPath) + ".xsd";
+                           string xsdFileName = Path.GetDirectoryName(item.FullPath) + "\\" + Path.GetFileNameWithoutExtension(item.FullPath) + ".xsd";
                            if (File.Exists(xsdFileName))
                            {
                               RemoveSchema(outputFileName);
@@ -332,7 +341,7 @@ namespace Services
                case "Print Report & Adobe Pdf":
                   {
 
-                  
+
                      foreach (var item in chosenFiles.Where(file => file.IsChecked == true))
                      {
                         try

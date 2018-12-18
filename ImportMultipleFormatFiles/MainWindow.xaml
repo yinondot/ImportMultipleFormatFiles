@@ -68,8 +68,8 @@
 
       <Grid Grid.Row="1" Grid.Column="1">
         <Grid.RowDefinitions>
-          <RowDefinition Height="2*" />
-          <RowDefinition Height="2*" />
+          <RowDefinition Height="1*" />
+          <RowDefinition Height="1*" />
           <RowDefinition Height="6*" />
           <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
@@ -79,7 +79,7 @@
           <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <CheckBox x:Name="cbFrstLineHeader" Grid.Row="0" Grid.ColumnSpan="2" FlowDirection="RightToLeft" IsChecked="{Binding Ischecked, Mode=OneWayToSource}" Visibility="{Binding CheckBoxVisiblity, UpdateSourceTrigger=PropertyChanged}" Content="האם השורה הראשונה היא שורת כותרת" VerticalAlignment="Center" Margin="14" HorizontalContentAlignment="Left" FontSize="14">
+      <CheckBox x:Name="cbFrstLineHeader" Grid.Row="0" Grid.ColumnSpan="2" FlowDirection="RightToLeft" IsChecked="{Binding IscheckedFirstRow, Mode=OneWayToSource}" Visibility="{Binding CheckBoxVisiblity, UpdateSourceTrigger=PropertyChanged}" Content="האם השורה הראשונה היא שורת כותרת" VerticalAlignment="Center" Margin="14,14,14,0" HorizontalContentAlignment="Left" FontSize="14">
           <CheckBox.Resources>
             <Style TargetType="{x:Type Path}">
               <Setter Property="FlowDirection" Value="LeftToRight" />
@@ -87,8 +87,18 @@
 
           </CheckBox.Resources>
         </CheckBox>
-        <Button x:Name="btnDefinitionFile" Content="בחר קובץ הגדרות..." Visibility="{Binding Visible}" Command="{Binding ChooseDefinitionFileCommand}" Margin="14" />
-        <TextBlock x:Name="tbDefinitonFileName" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14" VerticalAlignment="Center" />
+        <CheckBox x:Name="cbEmptyCellsZero"
+                  Grid.Row="1" Grid.ColumnSpan="2" FlowDirection="RightToLeft" IsChecked="{Binding IscheckedEmptyZeros, Mode=OneWayToSource}" Visibility="{Binding CheckBoxVisiblity, UpdateSourceTrigger=PropertyChanged}" Content="האם למלא תאים נומריים ריקים באפסים" VerticalAlignment="Center" Margin="14,0,0,0" HorizontalContentAlignment="Left" FontSize="14">
+          <CheckBox.Resources>
+            <Style TargetType="{x:Type Path}">
+              <Setter Property="FlowDirection" Value="LeftToRight" />
+            </Style>
+
+          </CheckBox.Resources>
+        </CheckBox>
+
+        <Button x:Name="btnDefinitionFile" Content="בחר קובץ הגדרות..." Visibility="{Binding Visible}" Command="{Binding ChooseDefinitionFileCommand}" Margin="14,0,14,0" />
+        <TextBlock x:Name="tbDefinitonFileName" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14,0,14,0" VerticalAlignment="Center" />
         <Button Content="הרץ" FontSize="15" Command="{Binding RunCommand}"
                 HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Width="76" Height="30"  Grid.Column="1" />
       </Grid>
