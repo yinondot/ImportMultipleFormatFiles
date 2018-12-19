@@ -19,7 +19,7 @@ namespace ImportMultipleFormatFiles
          try
          {
             //Task.Factory.StartNew(()=> UtilityCasewareIdea.ShowWindow());
-            UtilityCasewareIdea.ShowWindow();
+           // UtilityCasewareIdea.ShowWindow();
          }
          catch (Exception ex)
          {

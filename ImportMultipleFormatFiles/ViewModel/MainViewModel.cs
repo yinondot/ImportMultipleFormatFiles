@@ -86,7 +86,7 @@ namespace ImportMultipleFormatFiles.ViewModel
 
       public event PropertyChangedEventHandler PropertyChanged;
       //   public Action<string> action = new Action<string>(MainHelper.SetFileTypes);
-
+#region properties
       private string format = "";
       public string Format  // specifies the file format chosen
       {
@@ -100,7 +100,13 @@ namespace ImportMultipleFormatFiles.ViewModel
                MainHelper.SetFileTypesAndBtnDefinition_CheckBoxVisibility(this);
                DefinitionFilePath = "";
                ChosenFiles.Clear();
-
+               if (value == "XML") 
+               {
+                  BorderVisiblity = Visibility.Visible;
+               }
+               else{
+                  BorderVisiblity = Visibility.Hidden;
+               }
             }
          }
       }
@@ -130,6 +136,21 @@ namespace ImportMultipleFormatFiles.ViewModel
             {
                checkBoxVisiblity = value;
                OnPropertyChanged("CheckBoxVisiblity");
+            }
+
+         }
+      }
+
+      private Visibility borderVisiblity = Visibility.Hidden;
+      public Visibility BorderVisiblity
+      {
+         get { return borderVisiblity; }
+         set
+         {
+            if (borderVisiblity != value)
+            {
+               borderVisiblity = value;
+               OnPropertyChanged("BorderVisiblity");
             }
 
          }
@@ -193,7 +214,7 @@ namespace ImportMultipleFormatFiles.ViewModel
 
          }
       }
-
+      #endregion
       private void OnPropertyChanged(string propName)
       {
          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
