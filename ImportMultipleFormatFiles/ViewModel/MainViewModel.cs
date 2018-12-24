@@ -102,10 +102,18 @@ namespace ImportMultipleFormatFiles.ViewModel
                ChosenFiles.Clear();
                if (value == "XML") 
                {
-                  BorderVisiblity = Visibility.Visible;
+                  BorderVisiblityXml = Visibility.Visible;
                }
                else{
-                  BorderVisiblity = Visibility.Hidden;
+                  BorderVisiblityXml = Visibility.Hidden;
+               }
+               if (value== "Print Report & Adobe Pdf" || value == "Text" || value == "AS400")
+               {
+                  BorderVisiblityDef = Visibility.Visible;
+               }
+               else
+               {
+                  BorderVisiblityDef = Visibility.Hidden;
                }
             }
          }
@@ -141,16 +149,31 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
-      private Visibility borderVisiblity = Visibility.Hidden;
-      public Visibility BorderVisiblity
+      private Visibility borderVisiblityXml = Visibility.Hidden;
+      public Visibility BorderVisiblityXml
       {
-         get { return borderVisiblity; }
+         get { return borderVisiblityXml; }
          set
          {
-            if (borderVisiblity != value)
+            if (borderVisiblityXml != value)
             {
-               borderVisiblity = value;
-               OnPropertyChanged("BorderVisiblity");
+               borderVisiblityXml = value;
+               OnPropertyChanged("BorderVisiblityXml");
+            }
+
+         }
+      }
+
+      private Visibility borderVisiblityDef = Visibility.Hidden;
+      public Visibility BorderVisiblityDef
+      {
+         get { return borderVisiblityDef; }
+         set
+         {
+            if (borderVisiblityDef != value)
+            {
+               borderVisiblityDef = value;
+               OnPropertyChanged("BorderVisiblityDef");
             }
 
          }

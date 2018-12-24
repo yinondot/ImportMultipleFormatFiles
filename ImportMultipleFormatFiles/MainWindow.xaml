@@ -103,8 +103,7 @@
 
         <Button x:Name="btnDefinitionFile" Content="בחר קובץ הגדרות..." Visibility="{Binding Visible}" Command="{Binding ChooseDefinitionFileCommand}" Margin="14,0,14,0" />
         <TextBlock x:Name="tbDefinitonFileName" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14,0,14,0" VerticalAlignment="Center" />
-        <Border Name="bdrRemarksXML"  
-Grid.RowSpan="3"                Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3,1,1,2" Margin="10,0,10,20" CornerRadius="2" Visibility="{Binding BorderVisiblity, UpdateSourceTrigger=PropertyChanged}">
+        <Border Name="bdrRemarksXML" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3,1,1,2" Margin="10,0,10,20" CornerRadius="2" Visibility="{Binding BorderVisiblityXml, UpdateSourceTrigger=PropertyChanged}">
 
           <Label>
             <StackPanel FlowDirection="RightToLeft" >
@@ -137,7 +136,31 @@ Grid.RowSpan="3"                Grid.ColumnSpan="2" BorderBrush="Gray" BorderThi
           </Label>
 
         </Border>
-        
+        <Border Name="bdrRemarksDefinition" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3,1,1,2" Margin="10,10,10,85" CornerRadius="2" Visibility="{Binding BorderVisiblityDef, UpdateSourceTrigger=PropertyChanged}">
+
+          <Label>
+            <StackPanel FlowDirection="RightToLeft">
+              <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                  <Setter Property="FontSize" Value="14" />
+                  <Setter Property="Foreground" Value="Goldenrod" />
+                  <Setter Property="FontWeight" Value="SemiBold" />
+                  <Setter Property="Margin" Value="5,0,5,0" />
+                </Style>
+              </StackPanel.Resources>
+              <TextBlock TextWrapping="Wrap" Margin="5,10,5,0">
+             וודא כי קובץ ההגדרות זהה לכל הקבצים המיובאים.
+              </TextBlock >
+              <TextBlock TextWrapping="Wrap">
+         במידה ולא כך הדבר, הסר מייבוא את הקבצים שאין להם קובץ הגדרות זהה כנדרש.
+              </TextBlock >
+    
+
+            </StackPanel>
+
+          </Label>
+
+        </Border>
         <Button Content="הרץ" Style="{StaticResource btnSimple}" FontSize="15" Command="{Binding RunCommand}"
                 HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Width="76" Height="30" Margin="14,0" Grid.Column="1" />
       </Grid>
