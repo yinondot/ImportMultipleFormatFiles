@@ -27,6 +27,7 @@ namespace Services
             string newFileName;
             string runningFile = "";
             string dbname;
+            string lastImportedDBname = ""; ;
 
             switch (format)
             {
@@ -76,6 +77,7 @@ namespace Services
                               task.UniqueFilePrefix();
                               task.PerformTask();
 
+                              lastImportedDBname = task.OutputFilePath(newSheetName);
                               Marshal.ReleaseComObject(task);
                               task = null;
 
@@ -96,6 +98,7 @@ namespace Services
                            UtilityCasewareIdea.DisposeCom(task);
                         }
                      }
+                 
                      break;
                   }
                #endregion
@@ -382,6 +385,9 @@ namespace Services
                   #endregion
 
             }
+
+         
+
          }
          catch (Exception ex)
          {
