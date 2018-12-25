@@ -343,6 +343,7 @@ namespace ImportMultipleFormatFiles.ViewModel
             else
             {
                activateWindow(this, new EventArgs());
+               System.Windows.MessageBox.Show("הסתיים");
             }
             CanRun = true; ;
          }

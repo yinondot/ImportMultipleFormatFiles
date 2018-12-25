@@ -28,7 +28,7 @@ namespace Services
             string runningFile = "";
             string dbname;
             string lastImportedDBname = ""; ;
-
+            string error = "";
             switch (format)
             {
                // "Excel","Access","XML","Print Report & Adobe Pdf","Text","dBase","AS400"
@@ -88,7 +88,7 @@ namespace Services
                         }
                         catch (Exception ex)
                         {
-
+                           error += ex.Message;
                            ex.Data["File"] = runningFile;
 
                            //  return ex.Message;
@@ -134,7 +134,7 @@ namespace Services
                               task = null;
                               //probFile = Values.Dir + filename;
                               ex.Data["File"] = runningFile;
-
+                              error += ex.Message;
                            }
                         }
                      }
@@ -178,7 +178,7 @@ namespace Services
                            //probFile = Values.Dir + filename;
                            ex.Data["File"] = runningFile;
 
-                           return ex.Message;
+                           error += ex.Message;
                         }
                         finally
                         {
@@ -229,7 +229,7 @@ namespace Services
 
                            //probFile = Values.Dir + filename;
                            ex.Data["File"] = runningFile;
-
+                           error += ex.Message;
 
                         }
                         finally
@@ -275,7 +275,7 @@ namespace Services
 
                            //probFile = Values.Dir + filename;
                            ex.Data["File"] = runningFile;
-
+                           error += ex.Message;
 
                         }
                         finally
@@ -323,7 +323,7 @@ namespace Services
 
                            //probFile = Values.Dir + filename;
                            ex.Data["File"] = runningFile;
-
+                           error += ex.Message;
 
                         }
                         finally
@@ -366,7 +366,7 @@ namespace Services
 
                            //probFile = Values.Dir + filename;
                            ex.Data["File"] = runningFile;
-
+                           error += ex.Message;
 
                         }
                         finally
@@ -386,7 +386,7 @@ namespace Services
 
             }
 
-            return "";
+            return error;
 
          }
          catch (Exception ex)
