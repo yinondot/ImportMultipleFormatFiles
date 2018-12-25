@@ -386,7 +386,7 @@ namespace Services
 
             }
 
-         
+            return "";
 
          }
          catch (Exception ex)
@@ -397,7 +397,7 @@ namespace Services
          {
             UtilityCasewareIdea.DisposeCom(client);
          }
-         return "";
+      //   return "";
       }
 
       public static void RemoveSchema(string fileName)

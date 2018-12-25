@@ -324,17 +324,34 @@ namespace ImportMultipleFormatFiles.ViewModel
          }
       }
 
+      public event EventHandler activateWindow;
+      public event EventHandler MinimizeWindow;
       internal async void RunMethod()
       {
-         ImportFormats importFormats = new ImportFormats();
-         Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath,IscheckedFirstRow,IscheckedEmptyZeros));
-         task.Start();
-
-         if (await task=="")
+         try
          {
-            System.Windows.MessageBox.Show("הסתיים בהצלחה");
+            MinimizeWindow(this, new EventArgs());
+            ImportFormats importFormats = new ImportFormats();
+            Task<string> task = new Task<string>(() => importFormats.Start(ChosenFiles, Format, DefinitionFilePath, IscheckedFirstRow, IscheckedEmptyZeros));
+            task.Start();
+
+            if (await task == "")
+            {
+               activateWindow(this, new EventArgs());
+               System.Windows.MessageBox.Show("הסתיים בהצלחה");
+            }
+            else
+            {
+               activateWindow(this, new EventArgs());
+            }
+            CanRun = true; ;
          }
-         CanRun = true; ;
+         catch (Exception ex)
+         {
+
+           System.Windows.MessageBox.Show(ex.Message); 
+         }
+        
       }
       #endregion
 

@@ -25,12 +25,24 @@ namespace ImportMultipleFormatFiles
    {
       //Grid grid = new Grid();
       //Button button = new Button();
-
+      MainViewModel vm;
       public MainWindow()
       {
+         vm = new MainViewModel();
+         this.DataContext = vm;
          InitializeComponent();
          cbFileFormats.IsDropDownOpen = true;
          //button.SetValue(Grid.RowProperty, 4);
+         vm.activateWindow += delegate (object sender, EventArgs e)
+         {        
+            this.WindowState = WindowState.Normal;
+            this.Activate();      
+         };
+
+         vm.MinimizeWindow += delegate (object sender, EventArgs e)
+         {
+            this.WindowState = WindowState.Minimized;
+         };
       }
 
       private void Button_Click(object sender, RoutedEventArgs e)
