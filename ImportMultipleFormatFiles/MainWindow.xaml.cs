@@ -29,6 +29,7 @@ namespace ImportMultipleFormatFiles
       public MainWindow()
       {
          InitializeComponent();
+         cbFileFormats.IsDropDownOpen = true;
          //button.SetValue(Grid.RowProperty, 4);
       }
 

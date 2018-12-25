@@ -24,7 +24,7 @@
     </Grid.RowDefinitions>
    
     <Rectangle Grid.ColumnSpan="2" Fill="LightGray" />
-
+    <!--<Rectangle Grid.Row="1" Fill="#A9A7B1" />-->
     <Label Content="ייבוא קבצים בפורמטים שונים" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="30,25,48,0" FontSize="26" FontWeight="DemiBold" />
     <ComboBox x:Name="cbFileFormats" Grid.Row="1" Style="{StaticResource comboStyle}" Text="פורמט לייבוא ... " ItemsSource="{Binding Path=ImportFormats}" SelectedValue="{Binding Format, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
 
@@ -54,7 +54,7 @@
 
 
       <StackPanel x:Name="stkImport" Grid.Row="1">
-        <Button x:Name="btnChooseFolder" Style="{StaticResource btnSimple}" Content="בחר תיקייה" MinWidth="75" Command="{Binding ChooseFolderCommand}" />
+        <Button x:Name="btnChooseFolder" Style="{StaticResource btnSimple}" Content="בחר תיקייה" Width="200" Command="{Binding ChooseFolderCommand}" />
         <Button x:Name="btnChooseFile" Style="{StaticResource btnSimple}" Content="בחר קובץ" Command="{Binding ChooseFileCommand}" />
         <!--<ListView ItemsSource="{Binding ChosenFiles }" FlowDirection="LeftToRight"/>-->
         <xctk:CheckListBox Height="180" ItemsSource="{Binding ChosenFiles}" DisplayMemberPath="Name" SelectedMemberPath="IsChecked" FlowDirection="LeftToRight" />
@@ -102,16 +102,16 @@
         
 
         <Button x:Name="btnDefinitionFile" Content="בחר קובץ הגדרות..." Visibility="{Binding Visible}" Command="{Binding ChooseDefinitionFileCommand}" Margin="14,0,14,0" />
-        <TextBlock x:Name="tbDefinitonFileName" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14,0,14,0" VerticalAlignment="Center" />
+        <TextBlock x:Name="tbDefinitonFileName" TextWrapping="Wrap" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DefinitionFilePath, Converter={StaticResource GetFileNameConverter}}" Margin="14,0,14,0" VerticalAlignment="Center" />
         <Border Name="bdrRemarksXML" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3,1,1,2" Margin="10,0,10,20" CornerRadius="2" Visibility="{Binding BorderVisiblityXml, UpdateSourceTrigger=PropertyChanged}">
 
           <Label>
             <StackPanel FlowDirection="RightToLeft" >
               <StackPanel.Resources>
                 <Style TargetType="{x:Type TextBlock}">
-                  <Setter Property="FontSize" Value="14"/>
+                  <Setter Property="FontSize" Value="13.5"/>
                   <Setter Property="Foreground" Value="Goldenrod" />
-                  <Setter Property="FontWeight" Value="SemiBold" />
+                  <Setter Property="FontWeight" Value="Bold" />
                   <Setter Property="Margin" Value="5,0,5,0" />
                 </Style>
               </StackPanel.Resources>
@@ -144,7 +144,7 @@
                 <Style TargetType="{x:Type TextBlock}">
                   <Setter Property="FontSize" Value="14" />
                   <Setter Property="Foreground" Value="Goldenrod" />
-                  <Setter Property="FontWeight" Value="SemiBold" />
+                  <Setter Property="FontWeight" Value="Bold" />
                   <Setter Property="Margin" Value="5,0,5,0" />
                 </Style>
               </StackPanel.Resources>
