@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelsHouse.Properties {
+namespace ImportMultipleFormatFiles.Properties {
     using System;
     
     
@@ -61,12 +61,31 @@ namespace ModelsHouse.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon IACS_Macro_Icon {
+            get {
+                object obj = ResourceManager.GetObject("IACS_Macro_Icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap iacslogo {
             get {
                 object obj = ResourceManager.GetObject("iacslogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
             }
         }
     }
